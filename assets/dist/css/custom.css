@@ -1,0 +1,69 @@
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #e83e8c;
+}
+
+.bg-peang {
+    background-color: #92388F!important;
+}
+.bg-topbar{
+    background-image: url('header_image.jpg');
+    background-size: 350px 350px;
+}
+.bg-login{
+    background-image: url('header_image.jpg');
+    background-size: 60% 100%;
+    background-repeat: repeat-x;
+    background-color: #92388F;
+}
+
+.nav-link{
+    color: #ffffff;
+}
+a{
+color: #ffffff;
+}
+a:hover{
+    color:#fea2fb;
+}
+.nav-pills .nav-link {
+    color: #ffffff;
+    
+}
+
+.nav-sidebar .nav-item>.nav-link:hover {
+    color: #fea2fb;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #92388F;
+    border-color: #92388F;
+    box-shadow: none;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #bd3ab9;
+    border-color: #bd3ab9;
+    box-shadow: none;
+}
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: #bd3ab9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #bd3ab9;
+  outline: 0 none;
+}
