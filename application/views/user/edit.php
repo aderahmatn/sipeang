@@ -24,6 +24,7 @@
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" method="POST" action="" autocomplete="off">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <input type="hidden" name="fid_user" style="display: none" value="<?= $user->id_user ?>">
                 <input type="hidden" name="fpassword" style="display: none" value="<?= $user->password ?>">
 
@@ -63,10 +64,9 @@
                             <?php $role = $this->input->post('frole') ? $this->input->post('frole') : $user->role  ?>
 
                             <option hidden value="" selected>Pilih Level</option>
-                            <option value="user" <?= $role == "user" ? 'selected' : '' ?>>User</option>
-                            <option value="manager" <?= $role == "manager" ? 'selected' : '' ?>>Manager</option>
-                            <option value="manager it" <?= $role == "manager it" ? 'selected' : '' ?>>Manager IT</option>
-                            <option value="admin" <?= $role == "admin" ? 'selected' : '' ?>>Admin IT</option>
+                            <option value="user" <?= $role == "user" ? 'selected' : '' ?>>Operator</option>
+                            <option value="manager" <?= $role == "manager" ? 'selected' : '' ?>>PPTK</option>
+                            <option value="admin" <?= $role == "admin" ? 'selected' : '' ?>>Administrator</option>
                         </select>
                         <div class="invalid-feedback">
                             <?= form_error('frole') ?>

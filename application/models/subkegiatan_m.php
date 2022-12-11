@@ -59,13 +59,21 @@ class subkegiatan_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->result();
     }
     public function get_by_id($id)
     {
-        return $this->db->get_where($this->_table, ["id_user" => $id])->row();
+        $this->db->select('*');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
+        $this->db->where('subkegiatan.id_subkegiatan', $id);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+        // return $this->db->get_where($this->_table, ["id_subkegiatan" => $id])->row();
     }
     public function add()
     {

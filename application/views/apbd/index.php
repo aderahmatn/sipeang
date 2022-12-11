@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Data Master Program</h1>
+                <h1>Data Master APBD</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Data Master</a></li>
-                    <li class="breadcrumb-item active">Master Program</li>
+                    <li class="breadcrumb-item active">Master APBD</li>
                 </ol>
             </div>
         </div>
@@ -19,11 +19,11 @@
     <div class="container-fluid">
         <div class="row">
             <!-- left column -->
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card ">
                     <div class="card-header">
-                        <h3 class="card-title">Data Program</h3>
-                        <a href="<?= base_url('program/create') ?>" class="btn btn-sm btn-primary float-right"> + Tambah</a>
+                        <h3 class="card-title">Data Jenis APBD</h3>
+                        <a href="<?= base_url('apbd/create') ?>" class="btn btn-sm btn-primary float-right"> + Tambah</a>
 
                     </div>
                     <!-- /.card-header -->
@@ -33,27 +33,21 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">No</th>
-                                    <th>Kode Rekening</th>
-                                    <th>Uraian Program</th>
-                                    <th>Tahun Program</th>
+                                    <th>Jenis APBD</th>
                                     <th style="width: 10px">Modify</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1;
-                                foreach ($program as $key) : ?>
+                                foreach ($apbd as $key) : ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= $key->kode_rekening ?></td>
-                                        <td><?= $key->uraian_program ?></td>
-                                        <td><?= $key->tahun_program ?></td>
+                                        <td><?= $key->nama_apbd ?></td>
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="<?= base_url('program/edit/') . $key->id_program ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
-
-                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'program/delete/' . $key->id_program ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'apbd/delete/' . encrypt_url($key->id_apbd) ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>

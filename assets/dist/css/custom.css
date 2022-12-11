@@ -20,6 +20,12 @@
 .nav-link{
     color: #ffffff;
 }
+.link-blue{
+    color: rgb(18, 18, 113);
+}
+.link-blue:hover{
+    color: rgb(40, 40, 241);
+}
 a{
 color: #ffffff;
 }

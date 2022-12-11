@@ -38,7 +38,7 @@
         <div class="login-logo">
             <img src="<?= base_url() . 'assets/images/logo_kabupatentangerang_perda.png' ?>" alt="AdminLTE Logo" class="brand-image mr-2" style="width: 100px;">
 
-            <p style="color: white; font-weight: 400;">SI-PEANG</p>
+            <p style="color: white; font-weight: 400;">Sistem Informasi Penyerapan Anggaran</p>
         </div>
         <!-- /.login-logo -->
         <div class="card ">

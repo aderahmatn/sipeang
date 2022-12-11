@@ -24,6 +24,7 @@
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" method="POST" action="" autocomplete="off">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="fnama_user">Nama Lengkap</label>
@@ -66,10 +67,10 @@
                         <label for="frole">Level</label>
                         <select class="form-control <?php echo form_error('frole') ? 'is-invalid' : '' ?>" id="frole" name="frole">
                             <option hidden value="" selected>Pilih Level</option>
-                            <option value="user" <?= $this->input->post('frole') == "user" ? 'selected' : '' ?>>user</option>
-                            <option value="manager" <?= $this->input->post('frole') == "manager" ? 'selected' : '' ?>>Manager</option>
-                            <option value="manager it" <?= $this->input->post('frole') == "manager it" ? 'selected' : '' ?>>Manager IT</option>
-                            <option value="admin" <?= $this->input->post('frole') == "admin" ? 'selected' : '' ?>>Admin IT</option>
+                            <option value="user" <?= $this->input->post('frole') == "user" ? 'selected' : '' ?>>Operator</option>
+                            <option value="manager" <?= $this->input->post('frole') == "manager" ? 'selected' : '' ?>>PPTK</option>
+                            <!-- <option value="manager it" <?= $this->input->post('frole') == "manager it" ? 'selected' : '' ?>>Manager IT</option> -->
+                            <option value="admin" <?= $this->input->post('frole') == "admin" ? 'selected' : '' ?>>Administrator</option>
                         </select>
                         <div class="invalid-feedback">
                             <?= form_error('frole') ?>

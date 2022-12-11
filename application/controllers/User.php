@@ -69,7 +69,7 @@ class User extends CI_Controller
                 redirect('user', 'refresh');
             }
         }
-        $data['user'] = $this->user_m->get_by_id($id);
+        $data['user'] = $this->user_m->get_by_id(decrypt_url($id));
         if (!$data['user']) {
             $this->session->set_flashdata('error', 'Data User Tidak ditemukan!');
             redirect('user', 'refresh');
@@ -78,7 +78,7 @@ class User extends CI_Controller
     }
     public function delete($id)
     {
-        $this->user_m->delete($id);
+        $this->user_m->delete(decrypt_url($id));
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', 'Data User Berhsil Dihapus!');
             redirect('user', 'refresh');

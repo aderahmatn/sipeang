@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>SI-PEANG</title>
+  <title>Sistem Informasi Penyerapan Anggaran</title>
 
 
   <link rel="icon" href="<?= base_url("assets/images/logo_kabupatentangerang_perda.png") ?>" type="image/jpeg">
@@ -52,7 +52,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Brand Logo -->
       <a href="<?= base_url() ?>" class="brand-link bg-peang">
         <img src="<?= base_url("assets/images/logo_kabupatentangerang_perda.png") ?>" alt="AdminLTE Logo" class="brand-image">
-        <span class="brand-text text-white font-weight-bold">SI-PEANG</span>
+        <span class="brand-text text-white ">Penyerapan Anggaran </span>
+
       </a>
 
       <!-- Sidebar -->
@@ -138,6 +139,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="<?= base_url('subkegiatan') ?>" class="nav-link <?php echo $this->uri->segment(1) == 'subkegiatan' ? 'active' : '' ?>">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Master Sub Kegiatan</p>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?= base_url('apbd') ?>" class="nav-link <?php echo $this->uri->segment(1) == 'apbd' ? 'active' : '' ?>">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Master Jenis APBD</p>
                     </a>
                   </li>
                 </ul>
