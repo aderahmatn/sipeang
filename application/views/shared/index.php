@@ -91,6 +91,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url('penyerapan') ?>" class="nav-link <?= $this->uri->segment(1) == 'penyerapan' ? 'active' : '' ?>">
+                <i class="nav-icon fas fa-calendar-check"></i>
+                <p>
+                  Penyerapan Anggaran
+                </p>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a href="<?php echo base_url('kegiatan') ?>" class="nav-link <?= $this->uri->segment(1) == 'permintaan' ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-paper-plane"></i>

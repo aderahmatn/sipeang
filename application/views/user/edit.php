@@ -57,6 +57,13 @@
                             <?= form_error('femail') ?>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="fnohp">No Telegram</label>
+                        <input type="text" class="form-control <?= form_error('fnohp') ? 'is-invalid' : '' ?>" id="fnohp" name="fnohp" placeholder="Contoh : 6287776241887" value="<?= $user->nohp ?>">
+                        <div class="invalid-feedback">
+                            <?= form_error('fnohp') ?>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="frole">Level</label>
@@ -64,8 +71,8 @@
                             <?php $role = $this->input->post('frole') ? $this->input->post('frole') : $user->role  ?>
 
                             <option hidden value="" selected>Pilih Level</option>
-                            <option value="user" <?= $role == "user" ? 'selected' : '' ?>>Operator</option>
-                            <option value="manager" <?= $role == "manager" ? 'selected' : '' ?>>PPTK</option>
+                            <option value="operator" <?= $role == "operator" ? 'selected' : '' ?>>Operator</option>
+                            <option value="pptk" <?= $role == "pptk" ? 'selected' : '' ?>>PPTK</option>
                             <option value="admin" <?= $role == "admin" ? 'selected' : '' ?>>Administrator</option>
                         </select>
                         <div class="invalid-feedback">

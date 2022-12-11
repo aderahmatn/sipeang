@@ -51,7 +51,7 @@
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="<?= base_url('program/edit/') . $key->id_program ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
+                                                <a href="<?= base_url('program/edit/') . encrypt_url($key->id_program) ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
 
                                                 <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'program/delete/' . $key->id_program ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>

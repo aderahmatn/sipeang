@@ -36,6 +36,7 @@
                                     <th>Kode Rekening</th>
                                     <th>Sub Kegiatan</th>
                                     <th>Kegiatan</th>
+                                    <th>PIC</th>
                                     <th style="width: 10px">Modify</th>
                                 </tr>
                             </thead>
@@ -46,14 +47,15 @@
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><?= $key->kode_rekening_subkegiatan ?></td>
-                                        <td><?= $key->uraian_subkegiatan ?></td>
-                                        <td><?= $key->uraian_kegiatan ?></td>
+                                        <td><?= strtoupper($key->uraian_subkegiatan)  ?></td>
+                                        <td><?= strtoupper($key->uraian_kegiatan)  ?></td>
+                                        <td><?= strtoupper($key->nama_lengkap)  ?></td>
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="<?= base_url('subkegiatan/edit/') . $key->id_subkegiatan ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
+                                                <a href="<?= base_url('subkegiatan/edit/') . encrypt_url($key->id_subkegiatan)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
 
-                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'subkegiatan/delete/' . $key->id_subkegiatan ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'subkegiatan/delete/' . encrypt_url($key->id_subkegiatan)  ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>

@@ -51,9 +51,16 @@
                     </div>
                     <div class="form-group">
                         <label for="femail">Email</label>
-                        <input type="text" class="form-control <?= form_error('femail') ? 'is-invalid' : '' ?>" id="femail" name="femail" placeholder="Enter email" value="<?= $this->input->post('femail'); ?>" type="email">
+                        <input type="text" class="form-control <?= form_error('femail') ? 'is-invalid' : '' ?>" id="femail" name="femail" placeholder="Enter Email" value="<?= $this->input->post('femail'); ?>" type="email">
                         <div class="invalid-feedback">
                             <?= form_error('femail') ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fnohp">No Telegram</label>
+                        <input type="text" class="form-control <?= form_error('fnohp') ? 'is-invalid' : '' ?>" id="fnohp" name="fnohp" placeholder="Contoh : 6287776241887" value="<?= $this->input->post('fnohp'); ?>">
+                        <div class="invalid-feedback">
+                            <?= form_error('fnohp') ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -67,9 +74,8 @@
                         <label for="frole">Level</label>
                         <select class="form-control <?php echo form_error('frole') ? 'is-invalid' : '' ?>" id="frole" name="frole">
                             <option hidden value="" selected>Pilih Level</option>
-                            <option value="user" <?= $this->input->post('frole') == "user" ? 'selected' : '' ?>>Operator</option>
-                            <option value="manager" <?= $this->input->post('frole') == "manager" ? 'selected' : '' ?>>PPTK</option>
-                            <!-- <option value="manager it" <?= $this->input->post('frole') == "manager it" ? 'selected' : '' ?>>Manager IT</option> -->
+                            <option value="operator" <?= $this->input->post('frole') == "operator" ? 'selected' : '' ?>>Operator</option>
+                            <option value="pptk" <?= $this->input->post('frole') == "pptk" ? 'selected' : '' ?>>PPTK</option>
                             <option value="admin" <?= $this->input->post('frole') == "admin" ? 'selected' : '' ?>>Administrator</option>
                         </select>
                         <div class="invalid-feedback">

@@ -9,11 +9,13 @@ class Anggaran extends CI_Controller
         check_not_login();
         $this->load->model('kegiatan_m');
         $this->load->model('subkegiatan_m');
+        $this->load->model('anggaran_m');
     }
 
     public function index()
     {
         $data['subkegiatan'] = $this->subkegiatan_m->get_all();
+        $data['anggaran'] = $this->anggaran_m->get_all();
         $this->template->load('shared/index', 'anggaran/index', $data);
     }
     public function create($id = null)

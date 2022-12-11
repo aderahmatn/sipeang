@@ -23,7 +23,7 @@ class Kegiatan extends CI_Controller
         $validation = $this->form_validation;
         $validation->set_rules($kegiatan->rules());
         if ($validation->run() == FALSE) {
-            $data['program'] = $this->kegiatan_m->get_all();
+            $data['program'] = $this->program_m->get_all();
             $this->template->load('shared/index', 'kegiatan/create', $data);
         } else {
             $post = $this->input->post(null, TRUE);
@@ -42,7 +42,7 @@ class Kegiatan extends CI_Controller
         $validation = $this->form_validation;
         $validation->set_rules($kegiatan->rules());
         if ($this->form_validation->run() == FALSE) {
-            $data['program'] = $this->kegiatan_m->get_all();
+            $data['program'] = $this->program_m->get_all();
             $this->template->load('shared/index', 'kegiatan/index', $data);
         } else {
             $post = $this->input->post(null, TRUE);
@@ -56,33 +56,34 @@ class Kegiatan extends CI_Controller
 
     public function edit($id = null)
     {
-        if (!isset($id)) redirect('user');
-        $user = $this->user_m;
+        if (!isset($id)) redirect('kegiatan');
+        $kegiatan = $this->kegiatan_m;
         $validation = $this->form_validation;
-        $validation->set_rules($user->rules_update());
+        $validation->set_rules($kegiatan->rules_update());
         if ($this->form_validation->run()) {
             $post = $this->input->post(null, TRUE);
-            $this->user_m->update($post);
+            $this->kegiatan_m->update($post);
             if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('success', 'User Berhasil Diupdate!');
-                redirect('user', 'refresh');
+                $this->session->set_flashdata('success', 'kegiatan Berhasil Diupdate!');
+                redirect('kegiatan', 'refresh');
             } else {
-                $this->session->set_flashdata('warning', 'Data User Tidak Diupdate!');
-                redirect('user', 'refresh');
+                $this->session->set_flashdata('warning', 'Data kegiatan Tidak Diupdate!');
+                // redirect('kegiatan', 'refresh');
             }
         }
-        $data['user'] = $this->user_m->get_by_id($id);
-        if (!$data['user']) {
-            $this->session->set_flashdata('error', 'Data User Tidak ditemukan!');
-            redirect('user', 'refresh');
+        $data['kegiatan'] = $this->kegiatan_m->get_by_id(decrypt_url($id));
+        if (!$data['kegiatan']) {
+            $this->session->set_flashdata('error', 'Data kegiatan Tidak ditemukan!');
+            // redirect('kegiatan', 'refresh');
         }
-        $this->template->load('shared/index', 'user/edit', $data);
+        $data['program'] = $this->program_m->get_all();
+        $this->template->load('shared/index', 'kegiatan/edit', $data);
     }
     public function delete($id)
     {
-        $this->kegiatan_m->delete($id);
+        $this->kegiatan_m->delete(decrypt_url($id));
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('success', 'Data Kegiatan Berhsil Dihapus!');
+            $this->session->set_flashdata('success', 'Data Kegiatan Berhasil Dihapus!');
             redirect('kegiatan', 'refresh');
         } else {
             $this->session->set_flashdata('error', 'Data Kegiatan Gagal Dihapus!');

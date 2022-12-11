@@ -10,6 +10,7 @@ class Subkegiatan extends CI_Controller
         check_not_login();
         $this->load->model('kegiatan_m');
         $this->load->model('subkegiatan_m');
+        $this->load->model('user_m');
     }
 
     public function index()
@@ -19,12 +20,12 @@ class Subkegiatan extends CI_Controller
     }
     public function create()
     {
-        $kegiatan  = $this->kegiatan_m;
         $subkegiatan  = $this->subkegiatan_m;
         $validation = $this->form_validation;
         $validation->set_rules($subkegiatan->rules());
         if ($validation->run() == FALSE) {
             $data['kegiatan'] = $this->kegiatan_m->get_all();
+            $data['user'] = $this->user_m->get_all();
             $this->template->load('shared/index', 'subkegiatan/create', $data);
         } else {
             $post = $this->input->post(null, TRUE);
@@ -57,31 +58,33 @@ class Subkegiatan extends CI_Controller
 
     public function edit($id = null)
     {
-        if (!isset($id)) redirect('user');
-        $user = $this->user_m;
+        if (!isset($id)) redirect('subkegiatan');
+        $subkegiatan = $this->subkegiatan_m;
         $validation = $this->form_validation;
-        $validation->set_rules($user->rules_update());
+        $validation->set_rules($subkegiatan->rules_update());
         if ($this->form_validation->run()) {
             $post = $this->input->post(null, TRUE);
-            $this->user_m->update($post);
+            $this->subkegiatan_m->update($post);
             if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('success', 'User Berhasil Diupdate!');
-                redirect('user', 'refresh');
+                $this->session->set_flashdata('success', 'subkegiatan Berhasil Diupdate!');
+                redirect('subkegiatan', 'refresh');
             } else {
-                $this->session->set_flashdata('warning', 'Data User Tidak Diupdate!');
-                redirect('user', 'refresh');
+                $this->session->set_flashdata('warning', 'Data subkegiatan Tidak Diupdate!');
+                redirect('subkegiatan', 'refresh');
             }
         }
-        $data['user'] = $this->user_m->get_by_id($id);
-        if (!$data['user']) {
-            $this->session->set_flashdata('error', 'Data User Tidak ditemukan!');
-            redirect('user', 'refresh');
+        $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
+        if (!$data['subkegiatan']) {
+            $this->session->set_flashdata('error', 'Data subkegiatan Tidak ditemukan!');
+            redirect('subkegiatan', 'refresh');
         }
-        $this->template->load('shared/index', 'user/edit', $data);
+        $data['kegiatan'] = $this->kegiatan_m->get_all();
+        $data['user'] = $this->user_m->get_all();
+        $this->template->load('shared/index', 'subkegiatan/edit', $data);
     }
     public function delete($id)
     {
-        $this->subkegiatan_m->delete($id);
+        $this->subkegiatan_m->delete(decrypt_url($id));
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', 'Data Sub Kegiaran Berhasil Dihapus!');
             redirect('subkegiatan', 'refresh');

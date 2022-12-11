@@ -46,14 +46,13 @@
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><?= $key->kode_rekening ?></td>
-                                        <td><?= $key->uraian_kegiatan ?></td>
+                                        <td><?= strtoupper($key->uraian_kegiatan) ?></td>
                                         <td><?= $key->uraian_program ?></td>
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="<?= base_url('kegiatan/edit/') . $key->id_kegiatan ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
-
-                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'kegiatan/delete/' . $key->id_kegiatan ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                                <a href="<?= base_url('kegiatan/edit/') . encrypt_url($key->id_kegiatan)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
+                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'kegiatan/delete/' . encrypt_url($key->id_kegiatan) ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>

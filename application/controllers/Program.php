@@ -53,27 +53,27 @@ class Program extends CI_Controller
 
     public function edit($id = null)
     {
-        if (!isset($id)) redirect('user');
-        $user = $this->user_m;
+        if (!isset($id)) redirect('program');
+        $program = $this->program_m;
         $validation = $this->form_validation;
-        $validation->set_rules($user->rules_update());
+        $validation->set_rules($program->rules_update());
         if ($this->form_validation->run()) {
             $post = $this->input->post(null, TRUE);
-            $this->user_m->update($post);
+            $this->program_m->update($post);
             if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('success', 'User Berhasil Diupdate!');
-                redirect('user', 'refresh');
+                $this->session->set_flashdata('success', 'program Berhasil Diupdate!');
+                redirect('program', 'refresh');
             } else {
-                $this->session->set_flashdata('warning', 'Data User Tidak Diupdate!');
-                redirect('user', 'refresh');
+                $this->session->set_flashdata('warning', 'Data program Tidak Diupdate!');
+                redirect('program', 'refresh');
             }
         }
-        $data['user'] = $this->user_m->get_by_id($id);
-        if (!$data['user']) {
-            $this->session->set_flashdata('error', 'Data User Tidak ditemukan!');
-            redirect('user', 'refresh');
+        $data['program'] = $this->program_m->get_by_id(decrypt_url($id));
+        if (!$data['program']) {
+            $this->session->set_flashdata('error', 'Data program Tidak ditemukan!');
+            redirect('program', 'refresh');
         }
-        $this->template->load('shared/index', 'user/edit', $data);
+        $this->template->load('shared/index', 'program/edit', $data);
     }
     public function delete($id)
     {

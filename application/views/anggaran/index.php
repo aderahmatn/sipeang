@@ -52,59 +52,85 @@
                                         </td>
                                     </tr>
                                     <!-- Modal Detail-->
-                                    <div class="modal fade " id="modal-detail<?= $key->id_subkegiatan ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h6 class="modal-title"><strong>Detail Sub Kegiatan</strong></h6>
+                                <?php endforeach; ?>
+                        </table>
+                        <?php foreach ($subkegiatan as $key) : ?>
+                            <div class="modal fade " id="modal-detail<?= $key->id_subkegiatan ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title"><strong>Detail Sub Kegiatan</strong></h6>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row py-2">
+                                                <div class="col-3"><strong>Tahun Program </strong></div>
+                                                <div class="col-1">
+                                                    <strong>:</strong>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="row py-2">
-                                                        <div class="col-3"><strong>Tahun Program </strong></div>
-                                                        <div class="col-1">
-                                                            <strong>:</strong>
-                                                        </div>
-                                                        <div class="col-8 text-uppercase"><?= $key->tahun_program ?> <br></div>
-                                                    </div>
-                                                    <div class="row py-2 bg-light">
-                                                        <div class="col-3"><strong>Program </strong></div>
-                                                        <div class="col-1">
-                                                            <strong>:</strong>
-                                                        </div>
-                                                        <div class="col-8 text-uppercase"><?= $key->uraian_program ?> <br></div>
-                                                    </div>
-                                                    <div class="row py-2 ">
-                                                        <div class="col-3"><strong>Kegiatan </strong></div>
-                                                        <div class="col-1">
-                                                            <strong>:</strong>
-                                                        </div>
-                                                        <div class="col-8 text-uppercase"><?= $key->uraian_kegiatan ?> <br></div>
-                                                    </div>
-                                                    <div class="row py-2 bg-light">
-                                                        <div class="col-3"><strong>Sub Kegiatan </strong></div>
-                                                        <div class="col-1">
-                                                            <strong>:</strong>
-                                                        </div>
-                                                        <div class="col-8 text-uppercase"><?= $key->uraian_subkegiatan ?> <br></div>
-                                                    </div>
+                                                <div class="col-8 text-uppercase"><?= $key->tahun_program ?> <br></div>
+                                            </div>
+                                            <div class="row py-2 bg-light">
+                                                <div class="col-3"><strong>Program </strong></div>
+                                                <div class="col-1">
+                                                    <strong>:</strong>
+                                                </div>
+                                                <div class="col-8 text-uppercase"><?= $key->uraian_program ?> <br></div>
+                                            </div>
+                                            <div class="row py-2 ">
+                                                <div class="col-3"><strong>Kegiatan </strong></div>
+                                                <div class="col-1">
+                                                    <strong>:</strong>
+                                                </div>
+                                                <div class="col-8 text-uppercase"><?= $key->uraian_kegiatan ?> <br></div>
+                                            </div>
+                                            <div class="row py-2 bg-light">
+                                                <div class="col-3"><strong>Sub Kegiatan </strong></div>
+                                                <div class="col-1">
+                                                    <strong>:</strong>
+                                                </div>
+                                                <div class="col-8 text-uppercase"><?= $key->uraian_subkegiatan ?> <br></div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-12">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            asdasd
-                                                        </div>
-                                                    </div>
-                                                    <div class="row pt-2">
-                                                        <div class="col-5 "> <strong><a href="<?= base_url('anggaran/create/') . $key->id_subkegiatan ?>" class="link-blue">[Tambah Detail Belanja]</a></strong>
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 10px">#</th>
+                                                                        <th>Kode Rekening</th>
+                                                                        <th>Uraian Belanja</th>
+                                                                        <th>Anggaran</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1.</td>
+                                                                        <td>asas</td>
+                                                                        <td>
+                                                                            uraian belanja
+                                                                        </td>
+                                                                        <td>Rp. 8.200.000</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class=" modal-footer">
-                                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                            </div>
+                                            <div class="row pt-2">
+                                                <div class="col-5 "> <strong><a href="<?= base_url('anggaran/create/') . $key->id_subkegiatan ?>" class="link-blue">[Tambah Detail Belanja]</a></strong>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class=" modal-footer">
+                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
-                                <?php endforeach; ?>
-                        </table>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

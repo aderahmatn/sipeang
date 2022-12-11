@@ -13,6 +13,7 @@ class user_m extends CI_Model
     public $username;
     public $password;
     public $nip;
+    public $nohp;
     public function rules()
     {
         return [
@@ -40,6 +41,11 @@ class user_m extends CI_Model
                 'field' => 'fpassword',
                 'label' => 'Password',
                 'rules' => 'required'
+            ],
+            [
+                'field' => 'fnohp',
+                'label' => 'Nomor Telegram',
+                'rules' => 'required|numeric|min_length[11]|max_length[13]'
             ],
             [
                 'field' => 'fnip',
@@ -77,6 +83,11 @@ class user_m extends CI_Model
                 'rules' => 'required'
             ],
             [
+                'field' => 'fnohp',
+                'label' => 'Nomor Telegram',
+                'rules' => 'required|numeric|min_length[11]|max_length[13]'
+            ],
+            [
                 'field' => 'fnip',
                 'label' => 'NIP',
                 'rules' => 'required|numeric|min_length[20]|max_length[20]'
@@ -104,6 +115,7 @@ class user_m extends CI_Model
         $this->email = $post['femail'];
         $this->role = $post['frole'];
         $this->username = $post['fusername'];
+        $this->nohp = $post['fnohp'];
         $this->nip = $post['fnip'];
         $this->password = md5($post['fpassword']);
         $this->deleted = 0;
@@ -121,9 +133,11 @@ class user_m extends CI_Model
         $this->id_user = $post['fid_user'];
         $this->nama_lengkap = $post['fnama_user'];
         $this->email = $post['femail'];
+        $this->nohp = $post['fnohp'];
         $this->role = $post['frole'];
         $this->username = $post['fusername'];
         $this->nip = $post['fnip'];
+        $this->nohp = $post['fnohp'];
         $this->password = $post['fpassword'];
         $this->deleted = 0;
         $this->db->update($this->_table, $this, array('id_user' => $post['fid_user']));
