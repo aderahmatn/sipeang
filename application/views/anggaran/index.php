@@ -44,11 +44,10 @@
                                 foreach ($subkegiatan as $key) : ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><a href="" class="link-blue text-uppercase"><?= $key->uraian_subkegiatan ?></a></td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail<?= $key->id_subkegiatan ?>" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-eye" data-tolltip="tooltip" data-placement="top" title="Detail"></i></button>
-                                            </div>
+                                        <td><?= strtoupper($key->uraian_subkegiatan)  ?></td>
+                                        <td width='85'>
+                                            <a href="<?= base_url('anggaran/detail/') . encrypt_url($key->id_subkegiatan)  ?>">
+                                                <button type="button" class="btn btn-default btn-sm">Lihat Detail</button></a>
                                         </td>
                                     </tr>
                                     <!-- Modal Detail-->

@@ -68,13 +68,13 @@ class Kegiatan extends CI_Controller
                 redirect('kegiatan', 'refresh');
             } else {
                 $this->session->set_flashdata('warning', 'Data kegiatan Tidak Diupdate!');
-                // redirect('kegiatan', 'refresh');
+                redirect('kegiatan', 'refresh');
             }
         }
         $data['kegiatan'] = $this->kegiatan_m->get_by_id(decrypt_url($id));
         if (!$data['kegiatan']) {
             $this->session->set_flashdata('error', 'Data kegiatan Tidak ditemukan!');
-            // redirect('kegiatan', 'refresh');
+            redirect('kegiatan', 'refresh');
         }
         $data['program'] = $this->program_m->get_all();
         $this->template->load('shared/index', 'kegiatan/edit', $data);

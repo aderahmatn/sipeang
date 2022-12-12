@@ -25,6 +25,8 @@
             <form role="form" method="POST" action="" autocomplete="off">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <input type="hidden" name="fcreated_by" value="<?= $this->session->userdata('nip'); ?>" style="display: none">
+                <input type="hidden" name="fid_subkegiatan" value="<?= encrypt_url($subkegiatan->id_subkegiatan)  ?>" style="display: none">
+                <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="ftahun_program">Tahun Program</label>
@@ -80,6 +82,18 @@
                         <input type="text" class="form-control <?= form_error('fanggaran_belanja') ? 'is-invalid' : '' ?>" id="fanggaran_belanja" name="fanggaran_belanja" placeholder="jumlah anggaran">
                         <div class="invalid-feedback">
                             <?= form_error('fanggaran_belanja') ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fjenis_apbd">Jenis APBD</label>
+                        <select class="form-control <?php echo form_error('fjenis_apbd') ? 'is-invalid' : '' ?>" id="fjenis_apbd" name="fjenis_apbd">
+                            <option hidden value="" selected>Pilih APBD</option>
+                            <?php foreach ($apbd as $key) : ?>
+                                <option value="<?= $key->id_apbd ?>" <?= $this->input->post('fjenis_apbd') == $key->id_apbd ? 'selected' : '' ?>><?= strtoupper($key->nama_apbd) ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <div class="invalid-feedback">
+                            <?= form_error('fjenis_apbd') ?>
                         </div>
                     </div>
                 </div>
