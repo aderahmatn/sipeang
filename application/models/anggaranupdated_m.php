@@ -1,10 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class anggaran_m extends CI_Model
+class anggaranupdated_m extends CI_Model
 {
-    private $_table = "anggaran";
+    private $_table = "anggaran_updated";
 
+    public $id_anggaran_updated;
     public $id_belanja;
     public $kode_rekening_belanja;
     public $uraian_belanja;
@@ -16,37 +17,6 @@ class anggaran_m extends CI_Model
     public $id_apbd;
     public $deleted;
 
-    public function rules()
-    {
-        return [
-            [
-                'field' => 'fkode_rekening_anggaran',
-                'label' => 'Kode Rekening',
-                'rules' => 'required'
-            ],
-            [
-                'field' => 'fbulan_anggaran',
-                'label' => 'Bulan Anggaran',
-                'rules' => 'required'
-            ],
-            [
-                'field' => 'furaian_anggaran',
-                'label' => 'Uraian Anggaran',
-                'rules' => 'required'
-            ],
-            [
-                'field' => 'fanggaran_belanja',
-                'label' => 'Jumlah Anggaran',
-                'rules' => 'required|numeric'
-            ],
-            [
-                'field' => 'fjenis_apbd',
-                'label' => 'Jenis APBD',
-                'rules' => 'required'
-            ],
-
-        ];
-    }
     public function get_all()
     {
         $this->db->select('*');
@@ -64,30 +34,28 @@ class anggaran_m extends CI_Model
         $query = $this->db->get();
         return $query->row();
     }
-    public function get_by_subkegiatan($id)
+    public function get_by_anggaran($id)
     {
         $this->db->select('*');
-        $this->db->where('anggaran.id_subkegiatan', $id);
-        $this->db->order_by('id_belanja', 'desc');
+        $this->db->where('id_belanja', $id);
+        $this->db->join('apbd', 'anggaran_updated.id_apbd = apbd.id_apbd', 'left');
+        $this->db->order_by('id_anggaran_updated', 'desc');
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->result();
     }
-    public function get_total_by_subkegiatan($id)
-    {
-        return $this->db->query('SELECT SUM(anggaran_belanja) as total_anggaran FROM anggaran WHERE id_subkegiatan = ' . $id)->row()->total_anggaran;
-    }
     public function add()
     {
         $post = $this->input->post();
-        $this->kode_rekening_belanja = $post['fkode_rekening_anggaran'];
-        $this->uraian_belanja = $post['furaian_anggaran'];
-        $this->bulan = $post['fbulan_anggaran'];
-        $this->anggaran_belanja = $post['fanggaran_belanja'];
+        $this->id_belanja = decrypt_url($post['fid_anggaran']);
+        $this->kode_rekening_belanja = $post['fkode_rekening_belanja_old'];
+        $this->uraian_belanja = $post['furaian_belanja_old'];
+        $this->bulan = $post['fbulan_anggaran_old'];
+        $this->anggaran_belanja = $post['fanggaran_belanja_old'];
         $this->id_subkegiatan = decrypt_url($post['fid_subkegiatan']);
         $this->created_date = $post['fcreated_date'];
         $this->created_by = $post['fcreated_by'];
-        $this->id_apbd = $post['fjenis_apbd'];
+        $this->id_apbd = $post['fjenis_apbd_old'];
         $this->deleted = 0;
         $this->db->insert($this->_table, $this);
     }

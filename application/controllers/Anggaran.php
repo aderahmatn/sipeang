@@ -11,6 +11,7 @@ class Anggaran extends CI_Controller
         $this->load->model('subkegiatan_m');
         $this->load->model('anggaran_m');
         $this->load->model('apbd_m');
+        $this->load->model('anggaranupdated_m');
     }
 
     public function index()
@@ -56,6 +57,7 @@ class Anggaran extends CI_Controller
         $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
         $data['anggaran'] = $this->anggaran_m->get_by_subkegiatan(decrypt_url($id));
         $data['id'] = decrypt_url($id);
+        $data['total_anggaran'] = $this->anggaran_m->get_total_by_subkegiatan(decrypt_url($id));
         $this->template->load('shared/index', 'anggaran/detail', $data);
     }
     public function edit($id = null)
@@ -67,6 +69,7 @@ class Anggaran extends CI_Controller
         if ($this->form_validation->run()) {
             $post = $this->input->post(null, TRUE);
             $this->anggaran_m->update($post);
+            $this->anggaranupdated_m->add($post);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'anggaran Berhasil Diupdate!');
                 redirect('anggaran', 'refresh');
@@ -82,6 +85,40 @@ class Anggaran extends CI_Controller
         }
         $data['apbd'] = $this->apbd_m->get_all();
         $this->template->load('shared/index', 'anggaran/edit', $data);
+    }
+    public function histori($id)
+    {
+        $data = $this->anggaranupdated_m->get_by_anggaran($id);
+        $jml = count($data);
+        if ($jml == 0) { ?>
+            <div class="text-center">
+                <p>Riwayat belum tersedia.</p>
+            </div>
+        <?php } else {
+        ?>
+            <table id="TabelUser" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Kode Rekening</th>
+                        <th>Uraian</th>
+                        <th>Anggaran</th>
+                        <th>APBD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data as $key) {
+                    ?>
+                        <tr>
+                            <td><?= $key->kode_rekening_belanja ?></td>
+                            <td><?= $key->uraian_belanja ?></td>
+                            <td><?= rupiah($key->anggaran_belanja)  ?></td>
+                            <td><?= strtoupper($key->nama_apbd) ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+<?php }
     }
 }
 

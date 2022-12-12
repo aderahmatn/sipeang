@@ -27,6 +27,13 @@
                 <input type="hidden" name="fcreated_by" value="<?= $this->session->userdata('nip'); ?>" style="display: none">
                 <input type="hidden" name="fid_subkegiatan" value="<?= encrypt_url($anggaran->id_subkegiatan)  ?>" style="display: none">
                 <input type="hidden" name="fid_anggaran" value="<?= encrypt_url($anggaran->id_belanja)  ?>" style="display: none">
+                <input type="hidden" name="fkode_rekening_belanja_old" value="<?= $anggaran->kode_rekening_belanja  ?>" style="display: none">
+                <input type="hidden" name="furaian_belanja_old" value="<?= $anggaran->uraian_belanja  ?>" style="display: none">
+                <input type="hidden" name="fbulan_anggaran_old" value="<?= $anggaran->bulan  ?>" style="display: none">
+                <input type="hidden" name="fanggaran_belanja_old" value="<?= $anggaran->anggaran_belanja  ?>" style="display: none">
+                <input type="hidden" name="fjenis_apbd_old" value="<?= $anggaran->id_apbd ?>" style="display: none">
+
+
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
                     <div class="form-group">
