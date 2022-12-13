@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= base_url('anggaran') ?>">Data Anggaran</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url('penyerapan') ?>">Data Anggaran</a></li>
                     <li class="breadcrumb-item active">Detail Anggaran</li>
                 </ol>
             </div>
@@ -18,8 +18,8 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <a href="<?= base_url('anggaran/create/') . encrypt_url($id)  ?>" class="btn btn-sm btn-primary "> + Tambah Anggaran</a>
-                <a href="<?= base_url('anggaran/')  ?>" class="btn btn-sm btn-default float-right">
+                <a href="<?= base_url('penyerapan/create/') . encrypt_url($id)  ?>" class="btn btn-sm btn-primary "> + Tambah Penyerapan</a>
+                <a href="<?= base_url('penyerapan/')  ?>" class="btn btn-sm btn-default float-right">
                     Kembali </a>
             </div>
             <div class="card-body">
@@ -90,10 +90,9 @@
                                     <td><?= rupiah($key->anggaran_belanja)  ?></td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="<?= base_url('anggaran/edit/') . encrypt_url($key->id_belanja)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i>
+                                            <a href="<?= base_url('penyerapan/create/') . encrypt_url($key->id_belanja)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top">Serap Anggaran
                                                 </button>
                                             </a>
-                                            <a class="btn btn-default btn-sm" data-toggle="modal" onclick="getHistori(<?= $key->id_belanja ?>)" href="#modal_Detail">Riwayat</a>
                                         </div>
                                     </td>
                                 </tr>

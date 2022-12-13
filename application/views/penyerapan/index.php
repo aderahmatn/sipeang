@@ -3,11 +3,11 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Anggaran Belanja</h1>
+                <h1>Penyerapan Anggaran</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active">Anggaran Belanja</li>
+                    <li class="breadcrumb-item active">Penyerapan Anggaran</li>
                 </ol>
             </div>
         </div>
@@ -23,8 +23,6 @@
                 <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">Data Sub Kegiatan</h3>
-                        <!-- <a href="<?= base_url('anggaran/create') ?>" class="btn btn-sm btn-primary float-right"> + Tambah</a> -->
-
                     </div>
                     <!-- /.card-header -->
                     <!-- card-body -->
@@ -48,7 +46,7 @@
                                         <td><?= strtoupper($key->tahun_program)  ?></td>
                                         <td><?= strtoupper($key->uraian_subkegiatan)  ?></td>
                                         <td width='85'>
-                                            <a href="<?= base_url('anggaran/detail/') . encrypt_url($key->id_subkegiatan)  ?>">
+                                            <a href="<?= base_url('penyerapan/detail/') . encrypt_url($key->id_subkegiatan)  ?>">
                                                 <button type="button" class="btn btn-default btn-sm">Lihat Detail</button></a>
                                         </td>
                                     </tr>
