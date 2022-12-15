@@ -26,13 +26,16 @@ class Penyerapan extends CI_Controller
             redirect('penyerapan', 'refresh');
         }
         $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
-        $data['anggaran'] = $this->anggaran_m->get_by_subkegiatan(decrypt_url($id));
+        $data['total_penyerapan'] = $this->penyerapan_m->get_total_by_subkegiatan(decrypt_url($id));
+        $data['penyerapan'] = $this->penyerapan_m->get_all_by_subkegiatan(decrypt_url($id));
+        $data['anggaran'] = $this->anggaran_m->get_all_by_subkegiatan_penyerapan(decrypt_url($id));
         $data['id'] = decrypt_url($id);
         $data['total_anggaran'] = $this->anggaran_m->get_total_by_subkegiatan(decrypt_url($id));
         $this->template->load('shared/index', 'penyerapan/detail', $data);
     }
     public function create($id = null)
     {
+        $anggaran = $this->anggaran_m;
         $penyerapan  = $this->penyerapan_m;
         $validation = $this->form_validation;
         $validation->set_rules($penyerapan->rules());
@@ -52,7 +55,9 @@ class Penyerapan extends CI_Controller
                 $this->template->load('shared/index', 'penyerapan/create', $data);
             } else {
                 $post = $this->input->post(null, TRUE);
+                $id_belanja = $this->input->post('fid_belanja');
                 $file = $this->upload->data("file_name");
+                $anggaran->update_penyerapan(decrypt_url($id_belanja));
                 $penyerapan->Add($post, $file);
                 if ($this->db->affected_rows() > 0) {
                     $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');

@@ -74,6 +74,7 @@
                                 <th>Tahun / Bulan</th>
                                 <th>Uraian</th>
                                 <th>Anggaran</th>
+                                <th>APBD</th>
                                 <th style="width: 10px">Modify</th>
                             </tr>
                         </thead>
@@ -88,6 +89,7 @@
                                     <td><?= $key->bulan ?></td>
                                     <td><?= strtoupper($key->uraian_belanja)  ?></td>
                                     <td><?= rupiah($key->anggaran_belanja)  ?></td>
+                                    <td><?= strtoupper($key->nama_apbd)  ?></td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="<?= base_url('anggaran/edit/') . encrypt_url($key->id_belanja)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i>

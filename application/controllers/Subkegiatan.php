@@ -66,16 +66,16 @@ class Subkegiatan extends CI_Controller
             $post = $this->input->post(null, TRUE);
             $this->subkegiatan_m->update($post);
             if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('success', 'subkegiatan Berhasil Diupdate!');
+                $this->session->set_flashdata('success', 'sub kegiatan Berhasil Diupdate!');
                 redirect('subkegiatan', 'refresh');
             } else {
-                $this->session->set_flashdata('warning', 'Data subkegiatan Tidak Diupdate!');
+                $this->session->set_flashdata('warning', 'Data sub kegiatan Tidak Diupdate!');
                 redirect('subkegiatan', 'refresh');
             }
         }
         $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
         if (!$data['subkegiatan']) {
-            $this->session->set_flashdata('error', 'Data subkegiatan Tidak ditemukan!');
+            $this->session->set_flashdata('error', 'Data sub kegiatan Tidak ditemukan!');
             redirect('subkegiatan', 'refresh');
         }
         $data['kegiatan'] = $this->kegiatan_m->get_all();
@@ -86,10 +86,10 @@ class Subkegiatan extends CI_Controller
     {
         $this->subkegiatan_m->delete(decrypt_url($id));
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('success', 'Data Sub Kegiaran Berhasil Dihapus!');
+            $this->session->set_flashdata('success', 'Data Sub Kegiatan Berhasil Dihapus!');
             redirect('subkegiatan', 'refresh');
         } else {
-            $this->session->set_flashdata('error', 'Data Sub Kegiaran Gagal Dihapus!');
+            $this->session->set_flashdata('error', 'Data Sub Kegiatan Gagal Dihapus!');
             redirect('subkegiatan', 'refresh');
         }
     }
