@@ -10,6 +10,7 @@ class penyerapan_m extends CI_Model
     public $jumlah_penyerapan;
     public $lampiran;
     public $created_date;
+    public $bulan_penyerapan;
     public $created_by;
     public $deleted;
 
@@ -29,6 +30,7 @@ class penyerapan_m extends CI_Model
     {
         $post = $this->input->post();
         $this->id_belanja = decrypt_url($post['fid_belanja']);
+        $this->bulan_penyerapan = $post['fbulan_penyerapan'];
         $this->jumlah_penyerapan = str_replace(".", "", $post['fjumlah_penyerapan']);
         $this->lampiran = $file;
         $this->created_date = $post['fcreated_date'];
@@ -49,12 +51,35 @@ class penyerapan_m extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_by_anggaran($id = null)
+    {
+
+        $this->db->select('*');
+        $this->db->join('anggaran', 'anggaran.id_belanja = penyerapan.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('user', 'user.nip = penyerapan.created_by', 'left');
+        $this->db->where('penyerapan.id_belanja', $id);
+        $this->db->order_by('penyerapan.bulan_penyerapan', 'desc');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_total_by_subkegiatan($id = null)
     {
         $this->db->select_sum('jumlah_penyerapan');
         $this->db->join('anggaran', 'anggaran.id_belanja = penyerapan.id_belanja', 'left');
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
         $this->db->where('anggaran.id_subkegiatan', $id);
+        $query = $this->db->get($this->_table);
+        return $query->row()->jumlah_penyerapan;
+    }
+    public function get_total_penyerapan($tahun)
+    {
+        $this->db->select_sum('jumlah_penyerapan');
+        $this->db->join('anggaran', 'anggaran.id_belanja = penyerapan.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('anggaran.tahun_anggaran', $tahun);
         $query = $this->db->get($this->_table);
         return $query->row()->jumlah_penyerapan;
     }

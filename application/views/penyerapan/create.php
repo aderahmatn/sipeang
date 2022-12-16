@@ -23,11 +23,11 @@
             </div>
             <div class="card-body">
                 <div class="row py-2">
-                    <div class="col-2"><strong>Tahun / Bulan Anggaran </strong></div>
+                    <div class="col-2"><strong>Tahun Anggaran </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
                     </div>
-                    <div class="col-8 text-uppercase"><?= $anggaran->bulan ?><br></div>
+                    <div class="col-8 text-uppercase"><?= $anggaran->tahun_anggaran ?><br></div>
                 </div>
                 <div class="row py-2 bg-light">
                     <div class="col-2"><strong>Program </strong></div>
@@ -58,13 +58,20 @@
                     <div class="col-8 text-uppercase"><?= $anggaran->uraian_belanja  ?> <br></div>
                 </div>
                 <div class="row py-2 bg-light">
-                    <div class="col-2"><strong>Jumlah Anggaran </strong></div>
+                    <div class="col-2"><strong>Total Anggaran </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
                     </div>
                     <div class="col-8 text-uppercase"><?= rupiah($anggaran->anggaran_belanja)  ?> <br></div>
                 </div>
-                <div class="row py-2">
+                <div class="row py-2 ">
+                    <div class="col-2"><strong>Sisa Anggaran </strong></div>
+                    <div class="col-1">
+                        <strong>:</strong>
+                    </div>
+                    <div class="col-8 text-uppercase"><?= rupiah($anggaran->sisa_anggaran)  ?> <br></div>
+                </div>
+                <div class="row py-2 bg-light">
                     <div class="col-2"><strong>PIC Kegiatan </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
@@ -76,18 +83,29 @@
                     <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                     <input type="hidden" name="fcreated_by" value="<?= $this->session->userdata('nip'); ?>" style="display: none">
                     <input type="hidden" name="fid_belanja" value="<?= encrypt_url($anggaran->id_belanja)  ?>" style="display: none">
+                    <input type="hidden" name="fsisa_anggaran" value="<?= $anggaran->sisa_anggaran  ?>" style="display: none">
                     <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="fjumlah_penyerapan">Jumlah Penyerapan</label>
-                                <input type="text" class="form-control <?= form_error('fjumlah_penyerapan') ? 'is-invalid' : '' ?>" id="fjumlah_penyerapan" name="fjumlah_penyerapan" placeholder="Jumlah penyerapan">
-                                <div class="invalid-feedback">
-                                    <?= form_error('fjumlah_penyerapan') ?>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp</span>
+                                    </div>
+                                    <input type="text" class="form-control <?= form_error('fjumlah_penyerapan') ? 'is-invalid' : '' ?>" id="fjumlah_penyerapan" name="fjumlah_penyerapan" placeholder="Jumlah penyerapan" value="<?= $this->input->post('fjumlah_penyerapan'); ?>">
+                                    <div class=" invalid-feedback">
+                                        <?= form_error('fjumlah_penyerapan') ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fbulan_penyerapan">Bulan Penyerapan</label>
+                                <input type="month" class="form-control <?= form_error('fbulan_penyerapan') ? 'is-invalid' : '' ?>" id="fbulan_penyerapan" name="fbulan_penyerapan" placeholder="Bulan penyerapan">
+                                <div class="invalid-feedback">
+                                    <?= form_error('fbulan_penyerapan') ?>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="flampiran">Lampiran</label>
                                 <input type="file" class="form-control <?= form_error('flampiran') ? 'is-invalid' : '' ?>" id="flampiran" name="flampiran">

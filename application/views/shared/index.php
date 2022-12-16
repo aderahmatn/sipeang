@@ -52,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Brand Logo -->
       <a href="<?= base_url() ?>" class="brand-link bg-peang">
         <img src="<?= base_url("assets/images/logo_kabupatentangerang_perda.png") ?>" alt="AdminLTE Logo" class="brand-image">
-        <span class="brand-text text-white ">Penyerapan Anggaran </span>
+        <span class="brand-text text-white ">Penyerapan Anggaran</span>
 
       </a>
 
@@ -65,7 +65,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
           <div class="info pt-0">
             <a href="#" class="d-block pb-0"><?= ucwords($this->session->userdata('nama_lengkap')) ?> </a>
-            <small><span class="mb-3 badge badge-light pt-1"><?= ucwords($this->session->userdata('nip')) ?></span>
+            <small><span class="mb-3 badge badge-light pt-1"><?= ucwords($this->session->userdata('nip')) ?></span></small>
+            <small><span class="mb-3 badge badge-light pt-1"><?= ucwords($this->session->userdata('role')) ?></span>
             </small>
           </div>
         </div>
@@ -83,43 +84,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="<?php echo base_url('anggaran') ?>" class="nav-link <?= $this->uri->segment(1) == 'anggaran' ? 'active' : '' ?>">
-                <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                <p>
-                  Anggaran Belanja
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?php echo base_url('penyerapan') ?>" class="nav-link <?= $this->uri->segment(1) == 'penyerapan' ? 'active' : '' ?>">
-                <i class="nav-icon fas fa-calendar-check"></i>
-                <p>
-                  Penyerapan Anggaran
-                </p>
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a href="<?php echo base_url('kegiatan') ?>" class="nav-link <?= $this->uri->segment(1) == 'permintaan' ? 'active' : '' ?>">
-                <i class="nav-icon fa fa-paper-plane"></i>
-                <p>
-                  Data Kegiatan
-                </p>
-              </a>
-            </li>
+            <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'pptk') { ?>
+              <li class="nav-item">
+                <a href="<?php echo base_url('anggaran') ?>" class="nav-link <?= $this->uri->segment(1) == 'anggaran' ? 'active' : '' ?>">
+                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                  <p>
+                    Anggaran Belanja
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('penyerapan') ?>" class="nav-link <?= $this->uri->segment(1) == 'penyerapan' ? 'active' : '' ?>">
+                  <i class="nav-icon fas fa-calendar-check"></i>
+                  <p>
+                    Penyerapan Anggaran
+                  </p>
+                </a>
+              </li>
+            <?php } ?>
 
-            <li class="nav-item">
-              <a href="<?php echo base_url('realisasi') ?>" class="nav-link <?= $this->uri->segment(1) == 'perbaikan' ? 'active' : '' ?>">
-                <i class="nav-icon fas fa-tasks"></i>
-                <p>
-                  Data Realisasi
-                </p>
-              </a>
-            </li> -->
-
-            <?php if ($this->session->userdata('role') == 'admin') { ?>
+            <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'operator' || $this->session->userdata('role') == 'pptk') { ?>
               <li class="nav-item has-treeview">
-                <a href="#" class="nav-link <?= $this->uri->segment(1) == 'user' ? 'active' : '' ?><?= $this->uri->segment(1) == 'aset' ? 'active' : '' ?><?= $this->uri->segment(1) == 'departemen' ? 'active' : '' ?><?= $this->uri->segment(1) == 'kategori' ? 'active' : '' ?>">
+                <a href="#" class="nav-link <?= $this->uri->segment(1) == 'user' ? 'active' : '' ?><?= $this->uri->segment(1) == 'kegiatan' ? 'active' : '' ?><?= $this->uri->segment(1) == 'program' ? 'active' : '' ?><?= $this->uri->segment(1) == 'subkegiatan' ? 'active' : '' ?><?= $this->uri->segment(1) == 'apbd' ? 'active' : '' ?>">
                   <i class="nav-icon fas fa-database"></i>
                   <p>
                     Data Master
@@ -158,27 +144,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                   </li>
                 </ul>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?= base_url('user') ?>" class="nav-link <?php echo $this->uri->segment(1) == 'user' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Master User</p>
-                    </a>
-                  </li>
-                </ul>
+                <?php if ($this->session->userdata('role') == 'admin') { ?>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="<?= base_url('user') ?>" class="nav-link <?php echo $this->uri->segment(1) == 'user' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Master User</p>
+                      </a>
+                    </li>
+                  </ul>
               </li>
             <?php } ?>
-            <li class="nav-item">
-              <hr>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-logout">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>
-                  Logout
-                </p>
-              </a>
-            </li>
+          <?php } ?>
+          <li class="nav-item">
+            <hr>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-logout">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

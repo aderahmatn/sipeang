@@ -32,7 +32,6 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">No</th>
-                                    <th>Tahun</th>
                                     <th>Sub Kegiatan</th>
                                     <th style="width: 10px">Detail</th>
                                 </tr>
@@ -43,7 +42,6 @@
                                 foreach ($subkegiatan as $key) : ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= strtoupper($key->tahun_program)  ?></td>
                                         <td><?= strtoupper($key->uraian_subkegiatan)  ?></td>
                                         <td width='85'>
                                             <a href="<?= base_url('penyerapan/detail/') . encrypt_url($key->id_subkegiatan)  ?>">

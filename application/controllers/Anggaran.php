@@ -118,8 +118,59 @@ class Anggaran extends CI_Controller
                     <?php } ?>
                 </tbody>
             </table>
-<?php }
+        <?php }
     }
+    public function json_test($id = null)
+    {
+        $data['data'] = $this->anggaran_m->get_all_by_tahun($id);
+        print json_encode($data);
+    }
+    public function detail_dashboard($id = null)
+    {
+        $data['data'] = $this->anggaran_m->get_by_id($id); ?>
+        <div class="row py-2 bg-light">
+            <div class="col-2"><strong>Program </strong></div>
+            <div class="col-1">
+                <strong>:</strong>
+            </div>
+            <div class="col-8 text-uppercase"><?= $data['data']->uraian_program ?> <br></div>
+        </div>
+        <div class="row py-2">
+            <div class="col-2"><strong>Kegiatan </strong></div>
+            <div class="col-1">
+                <strong>:</strong>
+            </div>
+            <div class="col-8 text-uppercase"><?= $data['data']->uraian_kegiatan ?> <br></div>
+        </div>
+        <div class="row py-2 bg-light">
+            <div class="col-2"><strong>Sub Kegiatan </strong></div>
+            <div class="col-1">
+                <strong>:</strong>
+            </div>
+            <div class="col-8 text-uppercase"><?= $data['data']->uraian_subkegiatan ?> <br></div>
+        </div>
+        <div class="row py-2 ">
+            <div class="col-2"><strong>PIC </strong></div>
+            <div class="col-1">
+                <strong>:</strong>
+            </div>
+            <div class="col-8 text-uppercase"><?= $data['data']->nama_lengkap ?> <br></div>
+        </div>
+        <div class="row py-2 bg-light">
+            <div class="col-2"><strong>Total Anggaran </strong></div>
+            <div class="col-1">
+                <strong>:</strong>
+            </div>
+            <div class="col-8 text-uppercase"><?= rupiah($data['data']->anggaran_belanja)  ?> <br></div>
+        </div>
+        <div class="row py-2">
+            <div class="col-2"><strong>Total Penyerapan </strong></div>
+            <div class="col-1">
+                <strong>:</strong>
+            </div>
+            <div class="col-8 text-uppercase"><?= rupiah($data['data']->jumlah_penyerapan)  ?> <br></div>
+        </div>
+<?php }
 }
 
 /* End of file Anggaran.php */

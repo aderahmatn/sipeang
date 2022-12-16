@@ -57,7 +57,7 @@ class Penyerapan extends CI_Controller
                 $post = $this->input->post(null, TRUE);
                 $id_belanja = $this->input->post('fid_belanja');
                 $file = $this->upload->data("file_name");
-                $anggaran->update_penyerapan(decrypt_url($id_belanja));
+                $anggaran->update_sisa_anggaran(decrypt_url($id_belanja), $post);
                 $penyerapan->Add($post, $file);
                 if ($this->db->affected_rows() > 0) {
                     $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');
@@ -84,6 +84,42 @@ class Penyerapan extends CI_Controller
             $this->db->insert('tb_berkas', $data);
             redirect('upload');
         }
+    }
+    public function histori($id)
+    {
+        $data = $this->penyerapan_m->get_by_anggaran($id);
+        $jml = count($data);
+        if ($jml == 0) { ?>
+            <div class="text-center">
+                <p>Data penyerapan belum tersedia.</p>
+            </div>
+        <?php } else {
+        ?>
+            <table id="TabelUser" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Uraian</th>
+                        <th>Bulan Penyerapan</th>
+                        <th>PIC Penyerapan</th>
+                        <th>Jumlah Penyerapan</th>
+                        <th>Lampiran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data as $key) {
+                    ?>
+                        <tr>
+                            <td><?= strtoupper($key->uraian_belanja)  ?></td>
+                            <td><?= $key->bulan_penyerapan ?></td>
+                            <td><?= strtoupper($key->nama_lengkap) ?></td>
+                            <td><?= rupiah($key->jumlah_penyerapan)  ?></td>
+                            <td><a href="<?= base_url('uploads/') . $key->lampiran ?>" target="_blank" class="text-blue">Lihat Lampiran</a></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+<?php }
     }
 }
 

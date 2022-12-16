@@ -35,7 +35,6 @@
                                     <th style="width: 10px">No</th>
                                     <th>Kode Rekening</th>
                                     <th>Uraian Program</th>
-                                    <th>Tahun Program</th>
                                     <th style="width: 10px">Modify</th>
                                 </tr>
                             </thead>
@@ -46,9 +45,7 @@
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><?= $key->kode_rekening ?></td>
-                                        <td><?= $key->uraian_program ?></td>
-                                        <td><?= $key->tahun_program ?></td>
-
+                                        <td><?= strtoupper($key->uraian_program)  ?></td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="<?= base_url('program/edit/') . encrypt_url($key->id_program) ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>

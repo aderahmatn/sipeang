@@ -29,13 +29,6 @@
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="ftahun_program">Tahun Program</label>
-                        <input type="text" class="form-control <?= form_error('ftahun_program') ? 'is-invalid' : '' ?>" id="ftahun_program" name="ftahun_program" placeholder="Masukan kode rekening" value="<?= $subkegiatan->tahun_program ?>" readonly>
-                        <div class="invalid-feedback">
-                            <?= form_error('ftahun_program') ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="furaian_progam">Program</label>
                         <textarea name="furaian_progam" class="form-control <?= form_error('furaian_progam') ? 'is-invalid' : '' ?> text-uppercase" id="furaian_progam" readonly><?= $subkegiatan->uraian_program ?></textarea>
                         <div class="invalid-feedback">
@@ -58,16 +51,24 @@
                     </div>
                     <div class="form-group">
                         <label for="fkode_rekening_anggaran">Kode Rekening</label>
-                        <input type="text" class="form-control <?= form_error('fkode_rekening_anggaran') ? 'is-invalid' : '' ?>" id="fkode_rekening_anggaran" name="fkode_rekening_anggaran" placeholder="kode rekening anggaran">
-                        <div class="invalid-feedback">
+                        <input type="text" class="form-control <?= form_error('fkode_rekening_anggaran') ? 'is-invalid' : '' ?>" id="fkode_rekening_anggaran" name="fkode_rekening_anggaran" placeholder="kode rekening anggaran" value="<?= $this->input->post('fkode_rekening_anggaran'); ?>">
+                        <div class=" invalid-feedback">
                             <?= form_error('fkode_rekening_anggaran') ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fbulan_anggaran">Bulan anggaran</label>
-                        <input type="month" class="form-control <?= form_error('fbulan_anggaran') ? 'is-invalid' : '' ?>" id="fbulan_anggaran" name="fbulan_anggaran" placeholder="pilih bulan">
+                        <label for="ftahun_anggaran">Tahun Anggaran</label>
+                        <select class="form-control <?php echo form_error('ftahun_anggaran') ? 'is-invalid' : '' ?>" id="ftahun_anggaran" name="ftahun_anggaran">
+                            <option hidden value="" selected>Pilih Tahun </option>
+                            <?php
+                            $now = date('Y');
+                            $range = date('Y') + 10;
+                            for ($i = $now; $i < $range; $i++) { ?>
+                                <option value="<?= $i ?>" <?= $this->input->post('ftahun_anggaran') == $i ? 'selected' : '' ?>><?= $i ?></option>
+                            <?php  } ?>
+                        </select>
                         <div class="invalid-feedback">
-                            <?= form_error('fbulan_anggaran') ?>
+                            <?= form_error('ftahun_anggaran') ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -79,9 +80,14 @@
                     </div>
                     <div class="form-group">
                         <label for="fanggaran_belanja">Jumlah anggaran</label>
-                        <input type="text" class="form-control <?= form_error('fanggaran_belanja') ? 'is-invalid' : '' ?>" id="fanggaran_belanja" name="fanggaran_belanja" placeholder="jumlah anggaran">
-                        <div class="invalid-feedback">
-                            <?= form_error('fanggaran_belanja') ?>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp</span>
+                            </div>
+                            <input type="text" class="form-control <?= form_error('fanggaran_belanja') ? 'is-invalid' : '' ?>" id="fanggaran_belanja" name="fanggaran_belanja" placeholder="jumlah anggaran" value="<?= $this->input->post('fanggaran_belanja'); ?>">
+                            <div class=" invalid-feedback">
+                                <?= form_error('fanggaran_belanja') ?>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

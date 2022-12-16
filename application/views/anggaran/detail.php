@@ -23,13 +23,6 @@
                     Kembali </a>
             </div>
             <div class="card-body">
-                <div class="row py-2">
-                    <div class="col-2"><strong>Tahun Program </strong></div>
-                    <div class="col-1">
-                        <strong>:</strong>
-                    </div>
-                    <div class="col-8 text-uppercase"><?= $subkegiatan->tahun_program ?><br></div>
-                </div>
                 <div class="row py-2 bg-light">
                     <div class="col-2"><strong>Program </strong></div>
                     <div class="col-1">
@@ -51,14 +44,14 @@
                     </div>
                     <div class="col-8 text-uppercase"><?= $subkegiatan->uraian_subkegiatan ?> <br></div>
                 </div>
-                <div class="row py-2">
+                <!-- <div class="row py-2">
                     <div class="col-2"><strong>Total Anggaran </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
                     </div>
                     <div class="col-8 text-uppercase"><?= rupiah($total_anggaran)  ?> <br></div>
-                </div>
-                <div class="row py-2 bg-light">
+                </div> -->
+                <div class="row py-2 ">
                     <div class="col-2"><strong>PIC Kegiatan </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
@@ -71,7 +64,7 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Kode Rekening</th>
-                                <th>Tahun / Bulan</th>
+                                <th>Tahun</th>
                                 <th>Uraian</th>
                                 <th>Anggaran</th>
                                 <th>APBD</th>
@@ -86,7 +79,7 @@
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?= $key->kode_rekening_belanja ?></td>
-                                    <td><?= $key->bulan ?></td>
+                                    <td><?= $key->tahun_anggaran ?></td>
                                     <td><?= strtoupper($key->uraian_belanja)  ?></td>
                                     <td><?= rupiah($key->anggaran_belanja)  ?></td>
                                     <td><?= strtoupper($key->nama_apbd)  ?></td>

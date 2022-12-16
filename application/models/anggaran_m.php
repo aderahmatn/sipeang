@@ -8,13 +8,13 @@ class anggaran_m extends CI_Model
     public $id_belanja;
     public $kode_rekening_belanja;
     public $uraian_belanja;
-    public $bulan;
+    public $tahun_anggaran;
     public $anggaran_belanja;
     public $id_subkegiatan;
     public $created_date;
     public $created_by;
     public $id_apbd;
-    public $update_penyerapan;
+    public $sisa_anggaran;
     public $deleted;
 
     public function rules()
@@ -26,8 +26,8 @@ class anggaran_m extends CI_Model
                 'rules' => 'required'
             ],
             [
-                'field' => 'fbulan_anggaran',
-                'label' => 'Bulan Anggaran',
+                'field' => 'ftahun_anggaran',
+                'label' => 'Tahun Anggaran',
                 'rules' => 'required'
             ],
             [
@@ -53,10 +53,24 @@ class anggaran_m extends CI_Model
         $this->db->select('*');
         return $this->db->get_where($this->_table, ["anggaran.deleted" => 0])->result();
     }
+    public function get_all_by_tahun($tahun)
+    {
+        $this->db->select('*, anggaran.id_belanja, anggaran.anggaran_belanja as anggaran_belanja_one');
+        $this->db->select_sum('anggaran.anggaran_belanja');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
+        $this->db->join('penyerapan', 'penyerapan.id_belanja = anggaran.id_belanja', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->select_sum('penyerapan.jumlah_penyerapan');
+        $this->db->group_by('anggaran.id_belanja');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_all_by_subkegiatan_penyerapan($id)
     {
         $this->db->select('*');
-        $this->db->where('anggaran.update_penyerapan', 0);
         $this->db->where('deleted', 0);
         $this->db->where('anggaran.id_subkegiatan', $id);
         $this->db->order_by('id_belanja', 'desc');
@@ -66,11 +80,13 @@ class anggaran_m extends CI_Model
     }
     public function get_by_id($id)
     {
-        $this->db->select('*');
+        $this->db->select('*, penyerapan.jumlah_penyerapan');
+        $this->db->select_sum('penyerapan.jumlah_penyerapan');
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
         $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
         $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->join('penyerapan', 'penyerapan.id_belanja = anggaran.id_belanja', 'left');
         $this->db->where('anggaran.id_belanja', $id);
         $this->db->from($this->_table);
         $query = $this->db->get();
@@ -80,7 +96,6 @@ class anggaran_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->join('apbd', 'apbd.id_apbd = anggaran.id_apbd', 'left');
-
         $this->db->where('anggaran.id_subkegiatan', $id);
         $this->db->order_by('id_belanja', 'desc');
         $this->db->from($this->_table);
@@ -91,24 +106,42 @@ class anggaran_m extends CI_Model
     {
         return $this->db->query('SELECT SUM(anggaran_belanja) as total_anggaran FROM anggaran WHERE id_subkegiatan = ' . $id)->row()->total_anggaran;
     }
+    public function get_total_anggaran($tahun)
+    {
+        $this->db->select_sum('anggaran_belanja');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('tahun_anggaran', $tahun);
+        $query = $this->db->get($this->_table);
+        return $query->row()->anggaran_belanja;
+    }
+    public function get_sisa_anggaran($tahun)
+    {
+        $this->db->select_sum('sisa_anggaran');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('tahun_anggaran', $tahun);
+        $query = $this->db->get($this->_table);
+        return $query->row()->sisa_anggaran;
+    }
     public function add()
     {
         $post = $this->input->post();
         $this->kode_rekening_belanja = $post['fkode_rekening_anggaran'];
         $this->uraian_belanja = $post['furaian_anggaran'];
-        $this->bulan = $post['fbulan_anggaran'];
+        $this->tahun_anggaran = $post['ftahun_anggaran'];
         $this->anggaran_belanja = str_replace(".", "", $post['fanggaran_belanja']);
         $this->id_subkegiatan = decrypt_url($post['fid_subkegiatan']);
         $this->created_date = $post['fcreated_date'];
         $this->created_by = $post['fcreated_by'];
         $this->id_apbd = $post['fjenis_apbd'];
         $this->deleted = 0;
-        $this->update_penyerapan = 0;
+        $this->sisa_anggaran = str_replace(".", "", $post['fanggaran_belanja']);
         $this->db->insert($this->_table, $this);
     }
-    public function update_penyerapan($id)
+    public function update_sisa_anggaran($id, $post)
     {
-        $this->db->set('update_penyerapan', 1);
+        $this->db->set('sisa_anggaran', $post['fsisa_anggaran'] - str_replace(".", "", $post['fjumlah_penyerapan']));
         $this->db->where('id_belanja', $id);
         $this->db->update($this->_table);
     }
@@ -118,14 +151,14 @@ class anggaran_m extends CI_Model
         $this->id_belanja = decrypt_url($post['fid_anggaran']);
         $this->kode_rekening_belanja = $post['fkode_rekening_anggaran'];
         $this->uraian_belanja = $post['furaian_anggaran'];
-        $this->bulan = $post['fbulan_anggaran'];
+        $this->tahun_anggaran = $post['ftahun_anggaran'];
         $this->anggaran_belanja = str_replace(".", "", $post['fanggaran_belanja']);
         $this->id_subkegiatan = decrypt_url($post['fid_subkegiatan']);
         $this->created_date = $post['fcreated_date'];
         $this->created_by = $post['fcreated_by'];
         $this->id_apbd = $post['fjenis_apbd'];
         $this->deleted = 0;
-        $this->update_penyerapan = 0;
+        $this->sisa_anggaran = str_replace(".", "", $post['fanggaran_belanja']);
         $this->db->update($this->_table, $this, array('id_belanja' => decrypt_url($post['fid_anggaran'])));
     }
 }

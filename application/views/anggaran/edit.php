@@ -29,20 +29,13 @@
                 <input type="hidden" name="fid_anggaran" value="<?= encrypt_url($anggaran->id_belanja)  ?>" style="display: none">
                 <input type="hidden" name="fkode_rekening_belanja_old" value="<?= $anggaran->kode_rekening_belanja  ?>" style="display: none">
                 <input type="hidden" name="furaian_belanja_old" value="<?= $anggaran->uraian_belanja  ?>" style="display: none">
-                <input type="hidden" name="fbulan_anggaran_old" value="<?= $anggaran->bulan  ?>" style="display: none">
+                <input type="hidden" name="ftahun_anggaran_old" value="<?= $anggaran->tahun_anggaran  ?>" style="display: none">
                 <input type="hidden" name="fanggaran_belanja_old" value="<?= $anggaran->anggaran_belanja  ?>" style="display: none">
                 <input type="hidden" name="fjenis_apbd_old" value="<?= $anggaran->id_apbd ?>" style="display: none">
 
 
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="ftahun_program">Tahun Program</label>
-                        <input type="text" class="form-control <?= form_error('ftahun_program') ? 'is-invalid' : '' ?>" id="ftahun_program" name="ftahun_program" placeholder="Masukan kode rekening" value="<?= $anggaran->tahun_program ?>" readonly>
-                        <div class="invalid-feedback">
-                            <?= form_error('ftahun_program') ?>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="furaian_progam">Program</label>
                         <textarea name="furaian_progam" class="form-control <?= form_error('furaian_progam') ? 'is-invalid' : '' ?> text-uppercase" id="furaian_progam" readonly><?= $anggaran->uraian_program ?></textarea>
@@ -72,10 +65,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fbulan_anggaran">Bulan anggaran</label>
-                        <input type="month" class="form-control <?= form_error('fbulan_anggaran') ? 'is-invalid' : '' ?>" id="fbulan_anggaran" name="fbulan_anggaran" placeholder="pilih bulan" value="<?= $anggaran->bulan ?>">
+                        <label for="ftahun_anggaran">Tahun Anggaran</label>
+                        <select class="form-control <?php echo form_error('ftahun_anggaran') ? 'is-invalid' : '' ?>" id="ftahun_anggaran" name="ftahun_anggaran">
+                            <option hidden value="" selected>Pilih Tahun </option>
+                            <?php
+                            $now = date('Y');
+                            $range = date('Y') + 10;
+                            for ($i = $now; $i < $range; $i++) { ?>
+                                <option value="<?= $i ?>" <?= $anggaran->tahun_anggaran == $i ? 'selected' : '' ?>><?= $i ?></option>
+                            <?php  } ?>
+                        </select>
                         <div class="invalid-feedback">
-                            <?= form_error('fbulan_anggaran') ?>
+                            <?= form_error('ftahun_anggaran') ?>
                         </div>
                     </div>
                     <div class="form-group">

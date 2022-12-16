@@ -35,27 +35,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ftahun_program">Tahun Program</label>
-                        <select class="form-control <?php echo form_error('ftahun_program') ? 'is-invalid' : '' ?>" id="ftahun_program" name="ftahun_program">
-                            <option hidden value="" selected>Pilih Tahun</option>
-
-                            <option value="2022" <?= $this->input->post('ftahun_program') == '2022' ? 'selected' : '' ?>>2022</option>
-                            <option value="2023" <?= $this->input->post('ftahun_program') == '2023' ? 'selected' : '' ?>>2023</option>
-                            <option value="2024" <?= $this->input->post('ftahun_program') == '2024' ? 'selected' : '' ?>>2024</option>
-                            <option value="2024" <?= $this->input->post('ftahun_program') == '2024' ? 'selected' : '' ?>>2024</option>
-                            <option value="2025" <?= $this->input->post('ftahun_program') == '2025' ? 'selected' : '' ?>>2025</option>
-                            <option value="2026" <?= $this->input->post('ftahun_program') == '2026' ? 'selected' : '' ?>>2026</option>
-                            <option value="2027" <?= $this->input->post('ftahun_program') == '2027' ? 'selected' : '' ?>>2027</option>
-                            <option value="2028" <?= $this->input->post('ftahun_program') == '2028' ? 'selected' : '' ?>>2028</option>
-                            <option value="2029" <?= $this->input->post('ftahun_program') == '2029' ? 'selected' : '' ?>>2029</option>
-                            <option value="2029" <?= $this->input->post('ftahun_program') == '2029' ? 'selected' : '' ?>>2030</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            <?= form_error('ftahun_program') ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="furaian_program">Uraian Program</label>
                         <textarea name="furaian_program" class="form-control <?= form_error('furaian_program') ? 'is-invalid' : '' ?>" id="furaian_program"><?= $this->input->post('furaian_program'); ?></textarea>
                         <div class="invalid-feedback">

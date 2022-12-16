@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label for="fpassword">Password</label>
-                        <input type="password" class="form-control <?= form_error('fpassword') ? 'is-invalid' : '' ?>" id="fpassword" name="fpassword" placeholder="Enter Username" value="<?= $this->input->post('fpassword'); ?>">
+                        <input type="password" class="form-control <?= form_error('fpassword') ? 'is-invalid' : '' ?>" id="fpassword" name="fpassword" placeholder="Enter Password" value="<?= $this->input->post('fpassword'); ?>">
                         <div class="invalid-feedback">
                             <?= form_error('fpassword') ?>
                         </div>
@@ -76,6 +76,7 @@
                             <option hidden value="" selected>Pilih Level</option>
                             <option value="operator" <?= $this->input->post('frole') == "operator" ? 'selected' : '' ?>>Operator</option>
                             <option value="pptk" <?= $this->input->post('frole') == "pptk" ? 'selected' : '' ?>>PPTK</option>
+                            <option value="pa" <?= $this->input->post('frole') == "pa" ? 'selected' : '' ?>>PA</option>
                             <option value="admin" <?= $this->input->post('frole') == "admin" ? 'selected' : '' ?>>Administrator</option>
                         </select>
                         <div class="invalid-feedback">

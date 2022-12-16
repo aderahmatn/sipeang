@@ -68,14 +68,26 @@ class subkegiatan_m extends CI_Model
 
     public function get_all()
     {
-        $this->db->select('*');
-        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
-        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
-        $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
-        $this->db->where('subkegiatan.deleted', 0);
-        $this->db->from($this->_table);
-        $query = $this->db->get();
-        return $query->result();
+        if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'operator') {
+            $this->db->select('*');
+            $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+            $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
+            $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+            $this->db->where('subkegiatan.deleted', 0);
+            $this->db->from($this->_table);
+            $query = $this->db->get();
+            return $query->result();
+        } else {
+            $this->db->select('*');
+            $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+            $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
+            $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+            $this->db->where('subkegiatan.deleted', 0);
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+            $this->db->from($this->_table);
+            $query = $this->db->get();
+            return $query->result();
+        }
     }
     public function get_by_id($id)
     {
@@ -110,6 +122,7 @@ class subkegiatan_m extends CI_Model
     public function update($post)
     {
         $post = $this->input->post();
+        $this->id_subkegiatan = decrypt_url($post['fid_subkegiatan']);
         $this->kode_rekening_subkegiatan = $post['fkode_rekening_subkegiatan'];
         $this->id_kegiatan = $post['fid_kegiatan'];
         $this->uraian_subkegiatan = $post['furaian_subkegiatan'];

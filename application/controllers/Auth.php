@@ -26,7 +26,7 @@ class Auth extends CI_Controller
                 'status' => 'login'
             );
             $this->session->set_userdata($params);
-            redirect('dashboard', 'refresh');
+            redirect('dashboard/index/' . date('Y'), 'refresh');
         } else {
             $this->session->set_flashdata('error', 'username / password salah!');
             redirect('auth/login', 'refresh');

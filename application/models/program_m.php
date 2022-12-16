@@ -9,7 +9,6 @@ class program_m extends CI_Model
     public $id_program;
     public $kode_rekening;
     public $uraian_program;
-    public $tahun_program;
     public $date_created;
     public $deleted;
     public $created_by;
@@ -27,12 +26,7 @@ class program_m extends CI_Model
                 'field' => 'furaian_program',
                 'label' => 'Uraian Program',
                 'rules' => 'required'
-            ],
-            [
-                'field' => 'ftahun_program',
-                'label' => 'Tahun Program',
-                'rules' => 'required|numeric'
-            ],
+            ]
         ];
     }
     public function rules_update()
@@ -47,12 +41,7 @@ class program_m extends CI_Model
                 'field' => 'furaian_program',
                 'label' => 'Uraian Program',
                 'rules' => 'required'
-            ],
-            [
-                'field' => 'ftahun_program',
-                'label' => 'Tahun Program',
-                'rules' => 'required|numeric'
-            ],
+            ]
         ];
     }
 
@@ -74,7 +63,6 @@ class program_m extends CI_Model
         $this->kode_rekening = $post['fkode_rekening'];
         $this->uraian_program = $post['furaian_program'];
         $this->date_created = $post['fdate_created'];
-        $this->tahun_program = $post['ftahun_program'];
         $this->created_by = $post['fcreated_by'];
         $this->deleted = 0;
         $this->db->insert($this->_table, $this);
@@ -88,10 +76,10 @@ class program_m extends CI_Model
     public function update($post)
     {
         $post = $this->input->post();
+        $this->id_program = decrypt_url($post['fid_program']);
         $this->kode_rekening = $post['fkode_rekening'];
         $this->uraian_program = $post['furaian_program'];
         $this->date_created = $post['fdate_created'];
-        $this->tahun_program = $post['ftahun_program'];
         $this->created_by = $post['fcreated_by'];
         $this->deleted = 0;
         $this->db->update($this->_table, $this, array('id_program' => decrypt_url($post['fid_program'])));

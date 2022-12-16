@@ -48,10 +48,10 @@
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><?= $key->nip ?></td>
-                                        <td><?= $key->nama_lengkap ?></td>
-                                        <td><?= $key->email ?></td>
-                                        <td><?= $key->username ?></td>
-                                        <td><?= $key->role ?></td>
+                                        <td><?= strtoupper($key->nama_lengkap)  ?></td>
+                                        <td><?= strtoupper($key->email) ?></td>
+                                        <td><?= strtoupper($key->username) ?></td>
+                                        <td><?= strtoupper($key->role) ?></td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="<?= base_url('user/edit/') . encrypt_url($key->id_user)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
