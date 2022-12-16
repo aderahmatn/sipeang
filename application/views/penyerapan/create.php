@@ -98,6 +98,11 @@
                                         <?= form_error('fjumlah_penyerapan') ?>
                                     </div>
                                 </div>
+                                <small class="text-red mt-">
+                                    <?php if ($error_penyerapan) {
+                                        print $error_penyerapan['error'];
+                                    } ?>
+                                </small>
                             </div>
                             <div class="form-group">
                                 <label for="fbulan_penyerapan">Bulan Penyerapan</label>
