@@ -14,7 +14,6 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-<?= var_dump($anggaran) ?>
 <div class="row">
     <div class="col">
         <div class="card">

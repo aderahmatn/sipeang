@@ -161,6 +161,16 @@ class anggaran_m extends CI_Model
         $this->sisa_anggaran = str_replace(".", "", $post['fanggaran_belanja']);
         $this->db->update($this->_table, $this, array('id_belanja' => decrypt_url($post['fid_anggaran'])));
     }
+    public function get_anggaran_laporan($tahun)
+    {
+        $this->db->select('*');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+
+        $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $query = $this->db->get($this->_table);
+        return $query->result();
+    }
 }
 
 /* End of file kategori_m.php */

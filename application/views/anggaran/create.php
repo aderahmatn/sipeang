@@ -61,7 +61,7 @@
                         <select class="form-control <?php echo form_error('ftahun_anggaran') ? 'is-invalid' : '' ?>" id="ftahun_anggaran" name="ftahun_anggaran">
                             <option hidden value="" selected>Pilih Tahun </option>
                             <?php
-                            $now = date('Y');
+                            $now = date('Y') - 3;
                             $range = date('Y') + 10;
                             for ($i = $now; $i < $range; $i++) { ?>
                                 <option value="<?= $i ?>" <?= $this->input->post('ftahun_anggaran') == $i ? 'selected' : '' ?>><?= $i ?></option>

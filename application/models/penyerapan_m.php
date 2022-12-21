@@ -83,6 +83,19 @@ class penyerapan_m extends CI_Model
         $query = $this->db->get($this->_table);
         return $query->row()->jumlah_penyerapan;
     }
+    public function get_penyerapan_laporan($id_belanja, $bulan)
+    {
+        $this->db->select('jumlah_penyerapan');
+        $this->db->where('id_belanja', $id_belanja);
+        $this->db->where('bulan_penyerapan', $bulan);
+        $query = $this->db->get($this->_table);
+        $data = $query->row();
+        if (!$data) {
+            return "";
+        } else {
+            return $query->row()->jumlah_penyerapan;
+        }
+    }
 }
 
 /* End of file penyerapan_m.php */

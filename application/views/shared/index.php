@@ -156,6 +156,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </ul>
               </li>
             <?php } ?>
+            <li class="nav-item">
+              <a href="<?php echo base_url('laporan') ?>" class="nav-link <?= $this->uri->segment(1) == 'laporan' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
+
+                <i class="nav-icon fa fa-file-download"></i>
+                <p>
+                  Laporan
+                </p>
+              </a>
+            </li>
+
           <?php } ?>
           <li class="nav-item">
             <hr>
@@ -183,15 +193,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <?= $contents ?>
         </div><!-- /.container-fluid -->
       </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-      <div class="content">
-        <div class="container-fluid">
-          <!-- /.DISINI KONTEN UTAMA -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
@@ -248,7 +249,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     onIdle: function() {
       window.location = "<?= base_url('auth/logout') ?>";
     },
-    idle: 60000
+    idle: 500000
   });
 
 
