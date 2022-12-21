@@ -56,16 +56,16 @@ class Penyerapan extends CI_Controller
                 $data['error_upload'] = array('error' => $this->upload->display_errors());
                 $this->template->load('shared/index', 'penyerapan/create', $data);
             } else {
-                if ($this->input->post('fjumlah_penyerapan') > $this->input->post('fsisa_anggaran')) {
+                if (str_replace(".", "", $this->input->post('fjumlah_penyerapan')) > $this->input->post('fsisa_anggaran')) {
                     $data['anggaran'] = $this->anggaran_m->get_by_id(decrypt_url($id));
                     $data['error_upload'] = null;
                     $data['error_penyerapan'] = array('error' => 'Jumlah penyerapan melebihi anggaran.');
                     $this->template->load('shared/index', 'penyerapan/create', $data);
                 } else {
                     $post = $this->input->post(null, TRUE);
-                    $id_belanja = $this->input->post('fid_belanja');
+                    $id_belanja = decrypt_url($this->input->post('fid_belanja'));
                     $file = $this->upload->data("file_name");
-                    $anggaran->update_sisa_anggaran(decrypt_url($id_belanja), $post);
+                    $anggaran->update_sisa_anggaran($id_belanja, $post);
                     $penyerapan->Add($post, $file);
                     if ($this->db->affected_rows() > 0) {
                         $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');

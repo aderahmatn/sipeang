@@ -379,7 +379,7 @@ $config['encryption_key'] = '';
 */
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 7200;
+$config['sess_expiration'] = 3600;
 // $config['sess_expire_on_close'] = TRUE;
 $config['sess_save_path'] = APPPATH . 'cache/session';
 $config['sess_match_ip'] = FALSE;

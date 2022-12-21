@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?= base_url("assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css") ?>">
   <!-- jQuery -->
   <script src="<?= base_url("assets/plugins/jquery/jquery.min.js") ?>"></script>
+  <script src="<?= base_url() . 'assets/plugins/jquery.idle.js' ?>"></script>
   <!-- DataTables -->
   <script src="<?= base_url("assets/plugins/datatables/jquery.dataTables.min.js") ?>"></script>
   <script src="<?= base_url("assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js") ?>"></script>
@@ -219,6 +220,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="<?= base_url() . 'assets/plugins/sweetalert2/sweetalert2.min.js' ?>"></script>
   <!-- Toastr -->
   <script src="<?= base_url() . 'assets/plugins/toastr/toastr.min.js' ?>"></script>
+
 </body>
 
 </html>
@@ -242,10 +244,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- /.modal -->
 <!-- Alert Config -->
 <script type="text/javascript">
-  // window.addEventListener('beforeunload', function(e) {
-  //   e.preventDefault();
-  //   e.returnValue = '';
-  // });
+  $(document).idle({
+    onIdle: function() {
+      window.location = "<?= base_url('auth/logout') ?>";
+    },
+    idle: 60000
+  });
+
 
   $(function() {
     const Toast = Swal.mixin({

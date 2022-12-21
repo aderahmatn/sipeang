@@ -110,7 +110,7 @@ class Anggaran extends CI_Controller
                     foreach ($data as $key) {
                     ?>
                         <tr>
-                            <td><?= $key->kode_rekening_belanja ?></td>
+                            <td><?= $key->kode_rekening_updated ?></td>
                             <td><?= $key->uraian_belanja ?></td>
                             <td><?= rupiah($key->anggaran_belanja)  ?></td>
                             <td><?= strtoupper($key->nama_apbd) ?></td>
@@ -163,13 +163,13 @@ class Anggaran extends CI_Controller
             </div>
             <div class="col-8 text-uppercase"><?= rupiah($data['data']->anggaran_belanja)  ?> <br></div>
         </div>
-        <div class="row py-2">
+        <!-- <div class="row py-2">
             <div class="col-2"><strong>Total Penyerapan </strong></div>
             <div class="col-1">
                 <strong>:</strong>
             </div>
             <div class="col-8 text-uppercase"><?= rupiah($data['data']->jumlah_penyerapan)  ?> <br></div>
-        </div>
+        </div> -->
 <?php }
 }
 

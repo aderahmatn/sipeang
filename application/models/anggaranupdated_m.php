@@ -7,7 +7,7 @@ class anggaranupdated_m extends CI_Model
 
     public $id_anggaran_updated;
     public $id_belanja;
-    public $kode_rekening_belanja;
+    public $kode_rekening_updated;
     public $uraian_belanja;
     public $tahun_anggaran;
     public $anggaran_belanja;
@@ -48,7 +48,7 @@ class anggaranupdated_m extends CI_Model
     {
         $post = $this->input->post();
         $this->id_belanja = decrypt_url($post['fid_anggaran']);
-        $this->kode_rekening_belanja = $post['fkode_rekening_belanja_old'];
+        $this->kode_rekening_updated = $post['fkode_rekening_belanja_old'];
         $this->uraian_belanja = $post['furaian_belanja_old'];
         $this->tahun_anggaran = $post['ftahun_anggaran_old'];
         $this->anggaran_belanja = $post['fanggaran_belanja_old'];
@@ -69,7 +69,7 @@ class anggaranupdated_m extends CI_Model
     {
         $post = $this->input->post();
         $this->id_belanja = decrypt_url($post['fid_anggaran']);
-        $this->kode_rekening_belanja = $post['fkode_rekening_anggaran'];
+        $this->kode_rekening_updated = $post['fkode_rekening_anggaran'];
         $this->uraian_belanja = $post['furaian_anggaran'];
         $this->tahun_anggaran = $post['ftahun_anggaran'];
         $this->anggaran_belanja = $post['fanggaran_belanja'];
