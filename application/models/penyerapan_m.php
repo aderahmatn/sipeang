@@ -96,6 +96,17 @@ class penyerapan_m extends CI_Model
             return $query->row()->jumlah_penyerapan;
         }
     }
+    public function get_total_penyerapan_perbulan($bulan, $id_subkegiatan)
+    {
+        $this->db->select_sum('jumlah_penyerapan');
+        $this->db->join('anggaran', 'anggaran.id_belanja = penyerapan.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('subkegiatan.id_subkegiatan', $id_subkegiatan);
+        $this->db->where('penyerapan.bulan_penyerapan', $bulan);
+        $query = $this->db->get($this->_table);
+        return $query->row()->jumlah_penyerapan;
+    }
 }
 
 /* End of file penyerapan_m.php */

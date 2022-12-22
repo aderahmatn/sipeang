@@ -161,15 +161,33 @@ class anggaran_m extends CI_Model
         $this->sisa_anggaran = str_replace(".", "", $post['fanggaran_belanja']);
         $this->db->update($this->_table, $this, array('id_belanja' => decrypt_url($post['fid_anggaran'])));
     }
-    public function get_anggaran_laporan($tahun)
+    public function get_anggaran_laporan($tahun, $id_subkegiatan)
     {
         $this->db->select('*');
+        // $this->db->select_sum('anggaran.anggaran_belanja');
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
-
+        $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
         $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->where('anggaran.id_subkegiatan', $id_subkegiatan);
         $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
         $query = $this->db->get($this->_table);
         return $query->result();
+    }
+    public function get_total_anggaran_laporan($tahun, $id_subkegiatan)
+    {
+        $this->db->select('*');
+        $this->db->select_sum('anggaran.anggaran_belanja');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
+        $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->where('anggaran.id_subkegiatan', $id_subkegiatan);
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $query = $this->db->get($this->_table);
+        return $query->row()->anggaran_belanja;
     }
 }
 
