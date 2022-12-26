@@ -13,7 +13,7 @@ function penyerapan($id, $bulan)
     if ($hasil == 0) {
         return $hasil;
     } else {
-        return "Rp. " . number_format($hasil, 0, ',', '.');
+        return $hasil;
     }
 }
 function total_per_bulan($bulan, $id_subkegiatan)
@@ -30,6 +30,6 @@ function total_per_bulan($bulan, $id_subkegiatan)
     if ($hasil == 0) {
         return $hasil;
     } else {
-        return "Rp. " . number_format($hasil, 0, ',', '.');
+        return $hasil;
     }
 }

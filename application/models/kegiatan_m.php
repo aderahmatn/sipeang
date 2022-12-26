@@ -8,7 +8,7 @@ class kegiatan_m extends CI_Model
 
     public $id_kegiatan;
     public $id_program;
-    public $kode_rekening;
+    public $kode_rekening_kegiatan;
     public $uraian_kegiatan;
     public $created_date;
     public $created_by;
@@ -73,7 +73,7 @@ class kegiatan_m extends CI_Model
     public function add()
     {
         $post = $this->input->post();
-        $this->kode_rekening = $post['fkode_rekening'];
+        $this->kode_rekening_kegiatan = $post['fkode_rekening'];
         $this->id_program = $post['fid_program'];
         $this->uraian_kegiatan = $post['furaian_kegiatan'];
         $this->created_date = $post['fcreated_date'];
@@ -90,7 +90,7 @@ class kegiatan_m extends CI_Model
     public function update($post)
     {
         $post = $this->input->post();
-        $this->kode_rekening = $post['fkode_rekening'];
+        $this->kode_rekening_kegiatan = $post['fkode_rekening'];
         $this->id_program = $post['fid_program'];
         $this->uraian_kegiatan = $post['furaian_kegiatan'];
         $this->created_date = $post['fcreated_date'];

@@ -77,10 +77,13 @@
             <div class="card ">
                 <div class="card-header">
                     <h3 class="card-title">Data Laporan</h3>
+                    <a href="<?= base_url('excel/export/' . $tahun . '/' . $id_subkegiatan) ?>" class="btn btn-success float-right btn-sm ml-3 text-white"> <i class="fas fa-file-excel "></i> Download .Xls</a>
+                    <a href="" class="btn btn-danger float-right btn-sm text-white"><i class="fas fa-file-pdf"></i> Download .Pdf</a>
                 </div>
+
                 <!-- /.card-header -->
                 <!-- card-body -->
-                <div class="card-body ">
+                <div class="card-body table-responsive">
                     <dl class="row mb-0 mt-0">
                         <dt class="col-sm-2">Program :</dt>
                         <dd class="col-sm-8"><?= strtoupper($anggaran[0]->uraian_program)  ?></dd>
@@ -97,7 +100,7 @@
                         <dt class="col-sm-2">PIC Kegiatan : </dt>
                         <dd class="col-sm-8"><?= strtoupper($anggaran[0]->nama_lengkap) ?></dd>
                     </dl>
-                    <table class="table table-bordered table-sm text-sm">
+                    <table class="table table-bordered table-sm text-sm display" id="TabelUser">
                         <thead>
                             <tr>
                                 <th rowspan="2" class="text-center align-middle">NO</th>
@@ -119,6 +122,7 @@
                                 <th class="text-center align-middle">10</th>
                                 <th class="text-center align-middle">11</th>
                                 <th class="text-center align-middle">12</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -145,6 +149,8 @@
                                     <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-12") ?></td>
                                 </tr>
                             <?php endforeach ?>
+                        </tbody>
+                        <tfoot>
                             <tr>
                                 <th colspan="3" class="text-right">Total : </th>
                                 <th><?= rupiah($total_anggaran) ?> </th>
@@ -161,7 +167,7 @@
                                 <th class="text-center align-middle"><?= total_per_bulan($tahun . "-11", $id_subkegiatan) ?> </th>
                                 <th class="text-center align-middle"><?= total_per_bulan($tahun . "-12", $id_subkegiatan) ?> </th>
                             </tr>
-                        </tbody>
+                        </tfoot>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -183,11 +189,11 @@
     $(document).ready(function() {
         $('#TabelUser').DataTable({
             "responsive": true,
-
+            "ordering": false,
+            // dom: 'Bfrtip',
+            // buttons: [
+            //     'excel', 'pdf', 'print'
+            // ]
         });
-        $('[data-tolltip="tooltip"]').tooltip({
-            trigger: "hover"
-        })
-
     });
 </script>
