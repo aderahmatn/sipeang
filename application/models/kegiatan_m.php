@@ -59,7 +59,7 @@ class kegiatan_m extends CI_Model
 
     public function get_all()
     {
-        $this->db->select('*, kegiatan.kode_rekening');
+        $this->db->select('*, kegiatan.kode_rekening_kegiatan');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
         $this->db->where('kegiatan.deleted', 0);
         $this->db->from($this->_table);

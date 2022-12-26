@@ -78,7 +78,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Data Laporan</h3>
                     <a href="<?= base_url('excel/export/' . $tahun . '/' . $id_subkegiatan) ?>" class="btn btn-success float-right btn-sm ml-3 text-white"> <i class="fas fa-file-excel "></i> Download .Xls</a>
-                    <a href="" class="btn btn-danger float-right btn-sm text-white"><i class="fas fa-file-pdf"></i> Download .Pdf</a>
+                    <a href="<?= base_url('pdf/export/' . $tahun . '/' . $id_subkegiatan) ?>" target="_blank" class="btn btn-danger float-right btn-sm text-white"><i class="fas fa-file-pdf"></i> Download .Pdf</a>
                 </div>
 
                 <!-- /.card-header -->

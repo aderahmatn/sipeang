@@ -45,7 +45,7 @@
                                 foreach ($kegiatan as $key) : ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= $key->kode_rekening ?></td>
+                                        <td><?= $key->kode_rekening_kegiatan ?></td>
                                         <td><?= strtoupper($key->uraian_kegiatan) ?></td>
                                         <td><?= $key->uraian_program ?></td>
 
