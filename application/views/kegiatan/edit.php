@@ -22,15 +22,16 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
+            <?= var_dump($kegiatan) ?>
             <form role="form" method="POST" action="" autocomplete="off">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <input type="hidden" name="fcreated_by" value="<?= $this->session->userdata('nip'); ?>" style="display: none">
-                <input type="hidden" name="fid_kegiatan" value="<?= encrypt_url($kegiatan->id_kegiatan) ?>" style="display: none">
+                <input type="text" name="fid_kegiatan" value="<?= $kegiatan->id_kegiatan  ?>">
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="fkode_rekening">Kode Rekening</label>
-                        <input type="text" class="form-control <?= form_error('fkode_rekening') ? 'is-invalid' : '' ?>" id="fkode_rekening" name="fkode_rekening" placeholder="Masukan kode rekening" value="<?= $kegiatan->kode_rekening ?>">
+                        <input type="text" class="form-control <?= form_error('fkode_rekening') ? 'is-invalid' : '' ?>" id="fkode_rekening" name="fkode_rekening" placeholder="Masukan kode rekening" value="<?= $kegiatan->kode_rekening_kegiatan ?>">
                         <div class="invalid-feedback">
                             <?= form_error('fkode_rekening') ?>
                         </div>

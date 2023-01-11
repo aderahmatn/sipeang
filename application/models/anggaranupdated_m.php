@@ -16,7 +16,7 @@ class anggaranupdated_m extends CI_Model
     public $created_by;
     public $id_apbd;
     public $deleted;
-
+    // holllaaa
     public function get_all()
     {
         $this->db->select('*');

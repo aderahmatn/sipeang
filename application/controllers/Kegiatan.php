@@ -54,14 +54,14 @@ class Kegiatan extends CI_Controller
         }
     }
 
-    public function edit($id = null)
+    public function edit($id)
     {
         if (!isset($id)) redirect('kegiatan');
         $kegiatan = $this->kegiatan_m;
         $validation = $this->form_validation;
         $validation->set_rules($kegiatan->rules_update());
         if ($this->form_validation->run()) {
-            $post = $this->input->post(null, TRUE);
+            $post = $this->input->post();
             $this->kegiatan_m->update($post);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'kegiatan Berhasil Diupdate!');
@@ -71,7 +71,7 @@ class Kegiatan extends CI_Controller
                 redirect('kegiatan', 'refresh');
             }
         }
-        $data['kegiatan'] = $this->kegiatan_m->get_by_id(decrypt_url($id));
+        $data['kegiatan'] = $this->kegiatan_m->get_by_id($id);
         if (!$data['kegiatan']) {
             $this->session->set_flashdata('error', 'Data kegiatan Tidak ditemukan!');
             redirect('kegiatan', 'refresh');

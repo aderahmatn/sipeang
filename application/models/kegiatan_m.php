@@ -14,7 +14,7 @@ class kegiatan_m extends CI_Model
     public $created_by;
     public $deleted;
 
-
+    // asasa?
     public function rules()
     {
         return [
@@ -87,16 +87,18 @@ class kegiatan_m extends CI_Model
         $this->db->where('id_kegiatan', $id);
         $this->db->update($this->_table);
     }
+    // ?\asa
     public function update($post)
     {
         $post = $this->input->post();
+        $this->id_kegiatan = $post['fid_kegiatan'];
         $this->kode_rekening_kegiatan = $post['fkode_rekening'];
         $this->id_program = $post['fid_program'];
         $this->uraian_kegiatan = $post['furaian_kegiatan'];
         $this->created_date = $post['fcreated_date'];
         $this->created_by = $post['fcreated_by'];
         $this->deleted = 0;
-        $this->db->update($this->_table, $this, array('id_kegiatan' => decrypt_url($post['fid_kegiatan'])));
+        $this->db->update($this->_table, $this, array('id_kegiatan' => $post['fid_kegiatan']));
     }
 }
 

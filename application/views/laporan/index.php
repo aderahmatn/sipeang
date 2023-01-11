@@ -65,7 +65,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right">Kirim</button>
+                        <button type="submit" class="btn btn-primary float-right">Cari</button>
                     </div>
                     </form>
                 </div>
@@ -135,18 +135,18 @@
                                     <td><?= $key->kode_rekening_belanja ?></td>
                                     <td><?= $key->uraian_belanja ?></td>
                                     <td><?= rupiah($key->anggaran_belanja) ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-01") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-02") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-03") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-04") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-05") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-06") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-07") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-08") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-09") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-10") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-11") ?></td>
-                                    <td class="text-center align-middle"><?= penyerapan($key->id_belanja, $key->tahun_anggaran . "-12") ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-01")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-02")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-03")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-04")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-05")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-06")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-07")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-08")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-09")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-10")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-11")) ?></td>
+                                    <td class="text-center align-middle"><?= rupiah_no_rp(penyerapan($key->id_belanja, $key->tahun_anggaran . "-12")) ?></td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -154,18 +154,18 @@
                             <tr>
                                 <th colspan="3" class="text-right">Total : </th>
                                 <th><?= rupiah($total_anggaran) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-01", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-02", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-03", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-04", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-05", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-06", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-07", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-08", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-09", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-10", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-11", $id_subkegiatan) ?> </th>
-                                <th class="text-center align-middle"><?= total_per_bulan($tahun . "-12", $id_subkegiatan) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-01", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-02", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-03", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-04", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-05", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-06", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-07", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-08", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-09", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-10", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-11", $id_subkegiatan)) ?> </th>
+                                <th class="text-center align-middle"><?= rupiah_no_rp(total_per_bulan($tahun . "-12", $id_subkegiatan)) ?> </th>
                             </tr>
                         </tfoot>
                     </table>

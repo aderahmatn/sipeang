@@ -12,6 +12,9 @@ class Anggaran extends CI_Controller
         $this->load->model('anggaran_m');
         $this->load->model('apbd_m');
         $this->load->model('anggaranupdated_m');
+        $this->load->model('Detail_anggaran_m');
+        $this->load->helper('bulan');
+        $this->load->helper('anggaran');
     }
 
     public function index()
@@ -57,7 +60,6 @@ class Anggaran extends CI_Controller
         $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
         $data['anggaran'] = $this->anggaran_m->get_by_subkegiatan(decrypt_url($id));
         $data['id'] = decrypt_url($id);
-        $data['total_anggaran'] = $this->anggaran_m->get_total_by_subkegiatan(decrypt_url($id));
         $this->template->load('shared/index', 'anggaran/detail', $data);
     }
     public function edit($id = null)
@@ -69,9 +71,8 @@ class Anggaran extends CI_Controller
         if ($this->form_validation->run()) {
             $post = $this->input->post(null, TRUE);
             $this->anggaran_m->update($post);
-            $this->anggaranupdated_m->add($post);
             if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('success', 'anggaran Berhasil Diupdate!');
+                $this->session->set_flashdata('success', 'Anggaran Berhasil Diupdate!');
                 redirect('anggaran', 'refresh');
             } else {
                 $this->session->set_flashdata('warning', 'Data anggaran Tidak Diupdate!');
@@ -86,40 +87,59 @@ class Anggaran extends CI_Controller
         $data['apbd'] = $this->apbd_m->get_all();
         $this->template->load('shared/index', 'anggaran/edit', $data);
     }
-    public function histori($id)
+    public function tambah_anggaran($id = null)
     {
-        $data = $this->anggaranupdated_m->get_by_anggaran($id);
-        $jml = count($data);
-        if ($jml == 0) { ?>
-            <div class="text-center">
-                <p>Riwayat belum tersedia.</p>
-            </div>
-        <?php } else {
-        ?>
-            <table id="TabelUser" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Kode Rekening</th>
-                        <th>Uraian</th>
-                        <th>Anggaran</th>
-                        <th>APBD</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach ($data as $key) {
-                    ?>
-                        <tr>
-                            <td><?= $key->kode_rekening_updated ?></td>
-                            <td><?= $key->uraian_belanja ?></td>
-                            <td><?= rupiah($key->anggaran_belanja)  ?></td>
-                            <td><?= strtoupper($key->nama_apbd) ?></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        <?php }
+        if (!isset($id)) redirect('anggaran');
+        $detailAnggaran = $this->Detail_anggaran_m;
+        $validation = $this->form_validation;
+        $validation->set_rules($detailAnggaran->rules_tambah_anggaran());
+        if ($this->form_validation->run()) {
+            $post = $this->input->post(null, TRUE);
+            $this->Detail_anggaran_m->add($post);
+            if ($this->db->affected_rows() > 0) {
+                $this->session->set_flashdata('success', 'Anggaran berhasil ditambahkan!');
+                redirect('anggaran', 'refresh');
+            } else {
+                $this->session->set_flashdata('warning', 'Data anggaran tidak berhasil ditambahkan!');
+                redirect('anggaran', 'refresh');
+            }
+        }
+        $data['anggaran'] = $this->anggaran_m->get_by_id(decrypt_url($id));
+        if (!$data['anggaran']) {
+            $this->session->set_flashdata('error', 'Data anggaran Tidak ditemukan!');
+            redirect('anggaran', 'refresh');
+        }
+        $data['apbd'] = $this->apbd_m->get_all();
+        $this->template->load('shared/index', 'anggaran/create_anggaran', $data);
     }
+    public function detail_perencanaan($id)
+    {
+        $data = $this->Detail_anggaran_m->get_all($id);
+?>
+        <table id="TabelUser" class="table table-bordered table-striped text-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Bulan</th>
+                    <th>Anggaran</th>
+                    <th>APBD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $no = 1;
+                foreach ($data as $key) : ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= bulan($key->bulan) ?></td>
+                        <td><?= rupiah($key->jumlah_anggaran) ?></td>
+                        <td><?= strtoupper($key->nama_apbd) ?></td>
+                    </tr>
+                <?php endforeach ?>
+
+            </tbody>
+        </table>
+
+    <?php }
     public function json_test($id = null)
     {
         $data['data'] = $this->anggaran_m->get_all_by_tahun($id);

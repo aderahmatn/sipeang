@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Tambah Data Anggaran</h1>
+                <h1>Tambah Detail Anggaran</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= base_url('anggaran') ?>">Data Anggaran</a></li>
-                    <li class="breadcrumb-item active">Tambah Data Anggaran</li>
+                    <li class="breadcrumb-item active">Tambah Detail Anggaran</li>
                 </ol>
             </div>
         </div>
@@ -18,7 +18,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Input data anggaran belanja</h3>
+                <h3 class="card-title">Input detail anggaran belanja</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -78,30 +78,6 @@
                             <?= form_error('furaian_anggaran') ?>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="fanggaran_belanja">Jumlah anggaran</label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Rp</span>
-                            </div>
-                            <input type="text" class="form-control <?= form_error('fanggaran_belanja') ? 'is-invalid' : '' ?>" id="fanggaran_belanja" name="fanggaran_belanja" placeholder="jumlah anggaran" value="<?= $this->input->post('fanggaran_belanja'); ?>">
-                            <div class=" invalid-feedback">
-                                <?= form_error('fanggaran_belanja') ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="fjenis_apbd">Jenis APBD</label>
-                        <select class="form-control <?php echo form_error('fjenis_apbd') ? 'is-invalid' : '' ?>" id="fjenis_apbd" name="fjenis_apbd">
-                            <option hidden value="" selected>Pilih APBD</option>
-                            <?php foreach ($apbd as $key) : ?>
-                                <option value="<?= $key->id_apbd ?>" <?= $this->input->post('fjenis_apbd') == $key->id_apbd ? 'selected' : '' ?>><?= strtoupper($key->nama_apbd) ?></option>
-                            <?php endforeach ?>
-                        </select>
-                        <div class="invalid-feedback">
-                            <?= form_error('fjenis_apbd') ?>
-                        </div>
-                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -113,26 +89,3 @@
         <!-- /.card -->
     </div>
 </div>
-
-<script>
-    var tanpa_rupiah = document.getElementById('fanggaran_belanja');
-    tanpa_rupiah.addEventListener('keyup', function(e) {
-        tanpa_rupiah.value = formatRupiah(this.value);
-    });
-
-    function formatRupiah(angka, prefix) {
-        var number_string = angka.replace(/[^,\d]/g, '').toString(),
-            split = number_string.split(','),
-            sisa = split[0].length % 3,
-            rupiah = split[0].substr(0, sisa),
-            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-        if (ribuan) {
-            separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
-
-        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-    }
-</script>

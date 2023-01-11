@@ -30,8 +30,6 @@
                 <input type="hidden" name="fkode_rekening_belanja_old" value="<?= $anggaran->kode_rekening_belanja  ?>" style="display: none">
                 <input type="hidden" name="furaian_belanja_old" value="<?= $anggaran->uraian_belanja  ?>" style="display: none">
                 <input type="hidden" name="ftahun_anggaran_old" value="<?= $anggaran->tahun_anggaran  ?>" style="display: none">
-                <input type="hidden" name="fanggaran_belanja_old" value="<?= $anggaran->anggaran_belanja  ?>" style="display: none">
-                <input type="hidden" name="fjenis_apbd_old" value="<?= $anggaran->id_apbd ?>" style="display: none">
 
 
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
@@ -84,25 +82,6 @@
                         <textarea name="furaian_anggaran" class="form-control <?= form_error('furaian_anggaran') ? 'is-invalid' : '' ?> text-uppercase" id="furaian_anggaran"><?= $this->input->post('furaian_anggaran'); ?><?= $anggaran->uraian_belanja ?></textarea>
                         <div class="invalid-feedback">
                             <?= form_error('furaian_anggaran') ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="fanggaran_belanja">Jumlah anggaran</label>
-                        <input type="text" class="form-control <?= form_error('fanggaran_belanja') ? 'is-invalid' : '' ?>" id="fanggaran_belanja" name="fanggaran_belanja" placeholder="jumlah anggaran" value="<?= $anggaran->anggaran_belanja ?>">
-                        <div class="invalid-feedback">
-                            <?= form_error('fanggaran_belanja') ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="fjenis_apbd">Jenis APBD</label>
-                        <select class="form-control <?php echo form_error('fjenis_apbd') ? 'is-invalid' : '' ?>" id="fjenis_apbd" name="fjenis_apbd">
-                            <option hidden value="" selected>Pilih APBD</option>
-                            <?php foreach ($apbd as $key) : ?>
-                                <option value="<?= $key->id_apbd ?>" <?= $this->input->post('fjenis_apbd') == $key->id_apbd ? 'selected' : '' ?>><?= strtoupper($key->nama_apbd) ?></option>
-                            <?php endforeach ?>
-                        </select>
-                        <div class="invalid-feedback">
-                            <?= form_error('fjenis_apbd') ?>
                         </div>
                     </div>
                 </div>

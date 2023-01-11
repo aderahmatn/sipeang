@@ -42,7 +42,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner text-white ">
-                        <h4 class="text-bold mt-1"><?= rupiah($total_penyerapan) ?></h4>
+                        <!-- <h4 class="text-bold mt-1"><?= rupiah($total_penyerapan) ?></h4> -->
                         <p class="mt-3 mb-0">Total penyerapan tahun <?= $tahun ?></p>
                     </div>
                     <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
@@ -51,7 +51,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner text-white ">
-                        <h4 class="text-bold mt-1"><?= rupiah($sisa_anggaran) ?></h4>
+                        <!-- <h4 class="text-bold mt-1"><?= rupiah($sisa_anggaran) ?></h4> -->
                         <p class="mt-3 mb-0">Sisa anggaran tahun <?= $tahun ?></p>
                     </div>
                     <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
@@ -60,7 +60,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner text-white ">
-                        <h4 class="text-bold mt-1"><?= $total_penyerapan == 0 ? '0' : ceil($total_penyerapan / $total_anggaran * 100) ?><sup style="font-size: 16px">%</sup></h4>
+                        <!-- <h4 class="text-bold mt-1"><?= $total_penyerapan == 0 ? '0' : ceil($total_penyerapan / $total_anggaran * 100) ?><sup style="font-size: 16px">%</sup></h4> -->
                         <p class="mt-3 mb-0">Presentase penyerapan tahun <?= $tahun ?></p>
                     </div>
                     <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
