@@ -13,6 +13,7 @@ class Anggaran extends CI_Controller
         $this->load->model('apbd_m');
         $this->load->model('anggaranupdated_m');
         $this->load->model('Detail_anggaran_m');
+        $this->load->model('Detail_anggaran_edited_m');
         $this->load->helper('bulan');
         $this->load->helper('anggaran');
     }
@@ -23,6 +24,51 @@ class Anggaran extends CI_Controller
         $data['anggaran'] = $this->anggaran_m->get_all();
         $this->template->load('shared/index', 'anggaran/index', $data);
     }
+    public function insert_kegiatan($id_program = null, $tahun = null)
+    {
+        $data = $this->anggaran_m->get_kegiatan_by_tahun($id_program, $tahun);
+        foreach ($data as $key) :
+
+?>
+            <tr class="text-bold" id="kegiatan<?= $key->id_kegiatan ?>">
+                <td><?= $key->uraian_kegiatan ?></td>
+                <td>0</td>
+            </tr>
+            <script>
+                getSubkegiatan(<?= $key->id_kegiatan ?>, <?= $key->id_kegiatan ?>);
+            </script>
+        <?php endforeach;
+    }
+
+    public function insert_subkegiatan($id_program = null, $tahun = null)
+    {
+        $data = $this->anggaran_m->get_subkegiatan_by_tahun($id_program, $tahun);
+        foreach ($data as $key) :
+
+        ?>
+
+            <tr id="subkegiatan<?= $key->id_subkegiatan ?>">
+                <td><i><?= $key->uraian_subkegiatan ?></i></td>
+                <td>0</td>
+            </tr>
+            <script>
+                getDetailBelanja(<?= $key->id_subkegiatan ?>, <?= $key->id_subkegiatan ?>)
+            </script>
+        <?php endforeach;
+    }
+    public function insert_detail_anggaran($id_program = null, $tahun = null)
+    {
+        $data = $this->anggaran_m->get_detail_belanja_by_tahun($id_program, $tahun);
+        foreach ($data as $key) :
+
+        ?>
+            <tr>
+                <td class=""><?= $key->uraian_belanja ?></td>
+                <td>0</td>
+            </tr>
+        <?php endforeach;
+    }
+
     public function create($id = null)
     {
         $anggaran  = $this->anggaran_m;
@@ -46,8 +92,6 @@ class Anggaran extends CI_Controller
                 redirect('anggaran/detail/' . $id, 'refresh');
             }
         }
-        // $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
-        // $this->template->load('shared/index', 'anggaran/create', $data);
     }
     public function detail($id = null)
     {
@@ -87,6 +131,32 @@ class Anggaran extends CI_Controller
         $data['apbd'] = $this->apbd_m->get_all();
         $this->template->load('shared/index', 'anggaran/edit', $data);
     }
+    public function edit_detail($id = null)
+    {
+        if (!isset($id)) redirect('anggaran');
+        $anggaran = $this->Detail_anggaran_m;
+        $validation = $this->form_validation;
+        $validation->set_rules($anggaran->rules_edit_anggaran());
+        if ($this->form_validation->run()) {
+            $post = $this->input->post(null, TRUE);
+            $this->Detail_anggaran_m->update($post);
+            $this->Detail_anggaran_edited_m->add($post);
+            if ($this->db->affected_rows() > 0) {
+                $this->session->set_flashdata('success', 'Anggaran Berhasil Diupdate!');
+                redirect('anggaran', 'refresh');
+            } else {
+                $this->session->set_flashdata('warning', 'Data anggaran Tidak Diupdate!');
+                redirect('anggaran', 'refresh');
+            }
+        }
+        $data['anggaran'] = $this->Detail_anggaran_m->get_by_id(decrypt_url($id));
+        if (!$data['anggaran']) {
+            $this->session->set_flashdata('error', 'Data anggaran Tidak ditemukan!');
+            redirect('anggaran', 'refresh');
+        }
+        $data['apbd'] = $this->apbd_m->get_all();
+        $this->template->load('shared/index', 'anggaran/edit_detail', $data);
+    }
     public function tambah_anggaran($id = null)
     {
         if (!isset($id)) redirect('anggaran');
@@ -115,31 +185,75 @@ class Anggaran extends CI_Controller
     public function detail_perencanaan($id)
     {
         $data = $this->Detail_anggaran_m->get_all($id);
-?>
-        <table id="TabelUser" class="table table-bordered table-striped text-sm">
+        if ($data) { ?>
+            <p>Uraian Anggaran :<b> <?= $data[0]->uraian_belanja; ?></b></p>
+            <p>Tahun Anggaran :<b> <?= $data[0]->tahun_anggaran; ?></b></p>
+        <?php } else { ?>
+            <p class="text-muted">Belum ada data</p>
+        <?php  }
+        ?>
+        <table class="table table-bordered table-striped text-sm">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Bulan</th>
                     <th>Anggaran</th>
                     <th>APBD</th>
+                    <th style="width: 15%">Modify</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $no = 1;
+
                 foreach ($data as $key) : ?>
                     <tr>
                         <td><?= $no++ ?></td>
                         <td><?= bulan($key->bulan) ?></td>
                         <td><?= rupiah($key->jumlah_anggaran) ?></td>
                         <td><?= strtoupper($key->nama_apbd) ?></td>
+                        <td><a href=" <?= base_url('anggaran/edit_detail/') . encrypt_url($key->id_detail_anggaran)  ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i>
+                                </button>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-toggle="modal" onclick="getHistory(<?= $key->id_detail_anggaran ?>)" href="#modal_history" data-tolltip="tooltip" data-placement="top" title="History"><i class="fas fa-eye"></i></a>
+                        </td>
                     </tr>
                 <?php endforeach ?>
 
             </tbody>
         </table>
+        <?php }
+    public function get_history($id)
+    {
+        $data = $this->Detail_anggaran_edited_m->get_all($id);
+        if (!$data) { ?>
+            <p class="text-center text-muted">Belum ada data</p>
+        <?php } else { ?>
+            <table class="table table-bordered table-striped text-sm">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Anggaran</th>
+                        <th>APBD</th>
+                        <th>Tanggal Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $no = 1;
 
-    <?php }
+                    foreach ($data as $key) : ?>
+                        <tr>
+                            <td><?= $no++ ?></td>
+                            <td><?= rupiah($key->jumlah_anggaran_edited) ?></td>
+                            <td><?= strtoupper($key->nama_apbd) ?></td>
+                            <td><?= $key->edited_date ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+
+                </tbody>
+            </table>
+        <?php }
+    }
     public function json_test($id = null)
     {
         $data['data'] = $this->anggaran_m->get_all_by_tahun($id);

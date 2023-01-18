@@ -77,16 +77,13 @@
                                     <td><?= $key->kode_rekening_belanja ?></td>
                                     <td><?= $key->tahun_anggaran ?></td>
                                     <td><?= strtoupper($key->uraian_belanja)  ?></td>
-                                    <td><?= rupiah($key->anggaran_belanja)  ?></td>
-                                    <td><?= rupiah($key->sisa_anggaran)  ?></td>
-
+                                    <td><?= rupiah(total_anggaran($key->id_belanja))  ?></td>
+                                    <td>0</td>
                                     <td>
                                         <div class="btn-group">
-
-                                            <a href="<?= base_url('penyerapan/create/') . encrypt_url($key->id_belanja) ?> "><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <?= $key->sisa_anggaran != 0 ? '' : 'disabled' ?>>Serap Anggaran
+                                            <a href="<?= base_url('penyerapan/create/') . encrypt_url($key->id_belanja) ?> "><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top">Serap Anggaran
                                                 </button>
                                             </a>
-
                                             <a class="btn btn-default btn-sm" data-toggle="modal" onclick="getHistori(<?= $key->id_belanja ?>)" href="#modal_Detail">Lihat Penyerapan</a>
                                         </div>
                                     </td>

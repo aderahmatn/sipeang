@@ -34,6 +34,19 @@ class Laporan extends CI_Controller
             $this->template->load('shared/index', 'laporan/index', $data);
         }
     }
+
+    public function perencanaan($tahun = null)
+    {
+        if ($tahun == null) {
+            $data['tahun'] = date('Y');
+            $data['program'] = $this->anggaran_m->get_by_tahun($data['tahun']);
+            $this->template->load('shared/index', 'laporan/index1', $data);
+        } else {
+            $data['tahun'] = $tahun;
+            $data['program'] = $this->anggaran_m->get_by_tahun($data['tahun']);
+            $this->template->load('shared/index', 'laporan/index1', $data);
+        }
+    }
 }
 
 /* End of file Laporan.php */

@@ -110,6 +110,20 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal_history">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Riwayat Edit Anggaran</h4>
+            </div>
+            <div class="modal-body" id="bodymodal_history">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary float-right" id="closemodal-history">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- page script -->
 
 <script>
@@ -127,10 +141,27 @@
         });
     }
 
+    function getHistory(id) {
+        $.ajax({
+            type: "get",
+            url: "<?= site_url('anggaran/get_history/'); ?>" + id,
+            // data: "id=" + id,
+            dataType: "html",
+            success: function(response) {
+                console.log(response);
+                $('#bodymodal_history').empty();
+                $('#bodymodal_history').append(response);
+            }
+        });
+    }
+
 
     $(document).ready(function() {
         $('#closemodal').click(function() {
             $('#modal_Detail').modal('hide');
+        });
+        $('#closemodal-history').click(function() {
+            $('#modal_history').modal('hide');
         });
         $('#TabelUser').DataTable({
             "responsive": true,

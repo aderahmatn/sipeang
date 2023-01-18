@@ -92,24 +92,61 @@ class anggaran_m extends CI_Model
     {
         return $this->db->query('SELECT SUM(anggaran_belanja) as total_anggaran FROM anggaran WHERE id_subkegiatan = ' . $id)->row()->total_anggaran;
     }
-    // public function get_total_anggaran($tahun)
-    // {
-    //     $this->db->select_sum('anggaran_belanja');
-    //     $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
-    //     $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
-    //     $this->db->where('tahun_anggaran', $tahun);
-    //     $query = $this->db->get($this->_table);
-    //     return $query->row()->anggaran_belanja;
-    // }
-    // public function get_sisa_anggaran($tahun)
-    // {
-    //     $this->db->select_sum('sisa_anggaran');
-    //     $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
-    //     $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
-    //     $this->db->where('tahun_anggaran', $tahun);
-    //     $query = $this->db->get($this->_table);
-    //     return $query->row()->sisa_anggaran;
-    // }
+    public function get_by_tahun($tahun)
+    {
+        $this->db->select('*');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('tahun_anggaran', $tahun);
+        $this->db->group_by('program.id_program');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_kegiatan_by_tahun($id_program, $tahun)
+    {
+        $this->db->select('*');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('tahun_anggaran', $tahun);
+        $this->db->where('kegiatan.id_program', $id_program);
+        $this->db->group_by('kegiatan.id_kegiatan');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_subkegiatan_by_tahun($id_program, $tahun)
+    {
+        $this->db->select('*');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('tahun_anggaran', $tahun);
+        $this->db->where('subkegiatan.id_kegiatan', $id_program);
+        $this->db->group_by('subkegiatan.id_subkegiatan');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_detail_belanja_by_tahun($id, $tahun)
+    {
+        $this->db->select('*');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->where('tahun_anggaran', $tahun);
+        $this->db->where('anggaran.id_subkegiatan', $id);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function add()
     {
         $post = $this->input->post();

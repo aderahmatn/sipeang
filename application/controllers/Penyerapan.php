@@ -10,6 +10,7 @@ class Penyerapan extends CI_Controller
         $this->load->model('penyerapan_m');
         $this->load->model('subkegiatan_m');
         $this->load->model('anggaran_m');
+        $this->load->helper('anggaran');
     }
 
     public function index()
@@ -26,11 +27,11 @@ class Penyerapan extends CI_Controller
             redirect('penyerapan', 'refresh');
         }
         $data['subkegiatan'] = $this->subkegiatan_m->get_by_id(decrypt_url($id));
-        $data['total_penyerapan'] = $this->penyerapan_m->get_total_by_subkegiatan(decrypt_url($id));
+        // $data['total_penyerapan'] = $this->penyerapan_m->get_total_by_subkegiatan(decrypt_url($id));
         $data['penyerapan'] = $this->penyerapan_m->get_all_by_subkegiatan(decrypt_url($id));
         $data['anggaran'] = $this->anggaran_m->get_all_by_subkegiatan_penyerapan(decrypt_url($id));
         $data['id'] = decrypt_url($id);
-        $data['total_anggaran'] = $this->anggaran_m->get_total_by_subkegiatan(decrypt_url($id));
+        // $data['total_anggaran'] = $this->anggaran_m->get_total_by_subkegiatan(decrypt_url($id));
         $this->template->load('shared/index', 'penyerapan/detail', $data);
     }
     public function create($id = null)

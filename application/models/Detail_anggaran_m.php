@@ -35,6 +35,21 @@ class Detail_anggaran_m extends CI_Model
 
         ];
     }
+    public function rules_edit_anggaran()
+    {
+        return [
+            [
+                'field' => 'fjumlah_anggaran',
+                'label' => 'Jumlah Anggaran',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'fapbd',
+                'label' => 'Jenis APBD',
+                'rules' => 'required'
+            ],
+        ];
+    }
 
     public function add()
     {
@@ -47,6 +62,19 @@ class Detail_anggaran_m extends CI_Model
         $this->id_apbd = $post['fapbd'];
         $this->db->insert($this->_table, $this);
     }
+    public function update($post)
+    {
+        $post = $this->input->post();
+        $this->id_detail_anggaran = decrypt_url($post['fid_detail_anggaran']);
+        $this->jumlah_anggaran = str_replace(".", "", $post['fjumlah_anggaran']);
+        $this->bulan = $post['fbulan'];
+        $this->id_belanja = decrypt_url($post['fid_belanja']);
+        $this->created_date = $post['fcreated_date'];
+        $this->created_by = $post['fcreated_by'];
+        $this->id_apbd = $post['fapbd'];
+        $this->db->update($this->_table, $this, array('id_detail_anggaran' => decrypt_url($post['fid_detail_anggaran'])));
+    }
+
     public function get_all($id = null)
     {
         $this->db->select('*');
@@ -83,6 +111,19 @@ class Detail_anggaran_m extends CI_Model
         $this->db->where('id_belanja', $id_belanja);
         $this->db->where('bulan', $bulan);
         $query = $this->db->get($this->_table);
+        return $query->row();
+    }
+    public function get_by_id($id)
+    {
+        $this->db->select('*');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('detail_anggaran.id_detail_anggaran', $id);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
         return $query->row();
     }
 }
