@@ -28,45 +28,44 @@
                 <input type="hidden" name="fid_belanja" value="<?= encrypt_url($anggaran->id_belanja)  ?>" style="display: none">
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
-
                     <div class="form-group">
                         <label for="fbulan">Bulan Anggaran</label>
                         <select class="form-control <?php echo form_error('fbulan') ? 'is-invalid' : '' ?>" id="fbulan" name="fbulan">
                             <option hidden value="" selected>Pilih Bulan </option>
-                            <?php if (cek_bulan_anggaran(1, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(1, $anggaran->id_belanja) != 1) { ?>
                                 <option value="1" <?= $this->input->post('fbulan') == 1 ? 'selected' : '' ?>>Januari</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(2, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(2, $anggaran->id_belanja) != 1) { ?>
                                 <option value="2" <?= $this->input->post('fbulan') == 2 ? 'selected' : '' ?>>Februari</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(3, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(3, $anggaran->id_belanja) != 1) { ?>
                                 <option value="3" <?= $this->input->post('fbulan') == 3 ? 'selected' : '' ?>>Maret</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(4, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(4, $anggaran->id_belanja) != 1) { ?>
                                 <option value="4" <?= $this->input->post('fbulan') == 4 ? 'selected' : '' ?>>April</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(5, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(5, $anggaran->id_belanja) != 1) { ?>
                                 <option value="5" <?= $this->input->post('fbulan') == 5 ? 'selected' : '' ?>>Mei</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(6, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(6, $anggaran->id_belanja) != 1) { ?>
                                 <option value="6" <?= $this->input->post('fbulan') == 6 ? 'selected' : '' ?>>Juni</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(7, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(7, $anggaran->id_belanja) != 1) { ?>
                                 <option value="7" <?= $this->input->post('fbulan') == 7 ? 'selected' : '' ?>>Juli</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(8, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(8, $anggaran->id_belanja) != 1) { ?>
                                 <option value="8" <?= $this->input->post('fbulan') == 8 ? 'selected' : '' ?>>Agustus</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(9, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(9, $anggaran->id_belanja) != 1) { ?>
                                 <option value="9" <?= $this->input->post('fbulan') == 9 ? 'selected' : '' ?>>September</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(10, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(10, $anggaran->id_belanja) != 1) { ?>
                                 <option value="10" <?= $this->input->post('fbulan') == 10 ? 'selected' : '' ?>>Oktober</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(11, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(11, $anggaran->id_belanja) != 1) { ?>
                                 <option value="11" <?= $this->input->post('fbulan') == 11 ? 'selected' : '' ?>>November</option>
                             <?php } ?>
-                            <?php if (cek_bulan_anggaran(12, $anggaran->id_belanja) != 1) { ?>
+                            <?php if (cek_bulan_anggaran_for_form(12, $anggaran->id_belanja) != 1) { ?>
                                 <option value="12" <?= $this->input->post('fbulan') == 12 ? 'selected' : '' ?>>Desember</option>
                             <?php } ?>
 

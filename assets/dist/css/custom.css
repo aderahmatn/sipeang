@@ -78,3 +78,6 @@ input[type="color"]:focus,
     padding-left: 10px;
     vertical-align: middle;
 }
+.scrollme {
+    overflow-y: auto;
+}

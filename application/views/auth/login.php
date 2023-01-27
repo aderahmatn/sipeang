@@ -48,7 +48,7 @@
                 <form action="<?= base_url('auth/process') ?>" method="post" autocomplete="off">
                     <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username" name="fusername">
+                        <input type="text" class="form-control" placeholder="Username" name="fusername" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-key"></span>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password" autocomplete="on" name="fpassword">
+                        <input type="password" class="form-control" placeholder="Password" autocomplete="on" name="fpassword" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

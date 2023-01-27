@@ -140,9 +140,12 @@ class anggaran_m extends CI_Model
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
         $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->join('detail_anggaran', 'detail_anggaran.id_belanja = anggaran.id_belanja', 'left');
         $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
         $this->db->where('tahun_anggaran', $tahun);
         $this->db->where('anggaran.id_subkegiatan', $id);
+        $this->db->group_by('anggaran.id_belanja');
+
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->result();

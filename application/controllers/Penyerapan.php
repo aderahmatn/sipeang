@@ -8,9 +8,13 @@ class Penyerapan extends CI_Controller
         parent::__construct();
         check_not_login();
         $this->load->model('penyerapan_m');
+
         $this->load->model('subkegiatan_m');
         $this->load->model('anggaran_m');
+        $this->load->model('detail_anggaran_m');
         $this->load->helper('anggaran');
+        $this->load->helper('bulan');
+        $this->load->helper('penyerapan_helper');
     }
 
     public function index()
@@ -43,7 +47,7 @@ class Penyerapan extends CI_Controller
         if ($validation->run() == FALSE) {
             $data['error_upload'] = null;
             $data['error_penyerapan'] = null;
-            $data['anggaran'] = $this->anggaran_m->get_by_id(decrypt_url($id));
+            $data['anggaran'] = $this->detail_anggaran_m->get_by_id(decrypt_url($id));
             $this->template->load('shared/index', 'penyerapan/create', $data);
         } else {
             $config['upload_path']          = './uploads/';
@@ -53,25 +57,17 @@ class Penyerapan extends CI_Controller
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload('flampiran')) {
                 $data['error_penyerapan'] = null;
-                $data['anggaran'] = $this->anggaran_m->get_by_id(decrypt_url($id));
+                $data['anggaran'] = $this->detail_anggaran_m->get_by_id(decrypt_url($id));
                 $data['error_upload'] = array('error' => $this->upload->display_errors());
                 $this->template->load('shared/index', 'penyerapan/create', $data);
             } else {
-                if (str_replace(".", "", $this->input->post('fjumlah_penyerapan')) > $this->input->post('fsisa_anggaran')) {
-                    $data['anggaran'] = $this->anggaran_m->get_by_id(decrypt_url($id));
-                    $data['error_upload'] = null;
-                    $data['error_penyerapan'] = array('error' => 'Jumlah penyerapan melebihi anggaran.');
-                    $this->template->load('shared/index', 'penyerapan/create', $data);
-                } else {
-                    $post = $this->input->post(null, TRUE);
-                    $id_belanja = decrypt_url($this->input->post('fid_belanja'));
-                    $file = $this->upload->data("file_name");
-                    $anggaran->update_sisa_anggaran($id_belanja, $post);
-                    $penyerapan->Add($post, $file);
-                    if ($this->db->affected_rows() > 0) {
-                        $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');
-                        redirect('penyerapan', 'refresh');
-                    }
+
+                $post = $this->input->post(null, TRUE);
+                $file = $this->upload->data("file_name");
+                $penyerapan->Add($post, $file);
+                if ($this->db->affected_rows() > 0) {
+                    $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');
+                    redirect('penyerapan', 'refresh');
                 }
             }
         }
@@ -105,11 +101,11 @@ class Penyerapan extends CI_Controller
             </div>
         <?php } else {
         ?>
-            <table id="TabelUser" class="table table-bordered table-striped">
+            <table id="TabelUser" class="table table-bordered table-striped text-sm">
                 <thead>
                     <tr>
-                        <th>Uraian</th>
-                        <th>Bulan Penyerapan</th>
+                        <th>Bulan Anggaran</th>
+                        <th>Tanggal Penyerapan</th>
                         <th>PIC Penyerapan</th>
                         <th>Jumlah Penyerapan</th>
                         <th>Lampiran</th>
@@ -120,8 +116,8 @@ class Penyerapan extends CI_Controller
                     foreach ($data as $key) {
                     ?>
                         <tr>
-                            <td><?= strtoupper($key->uraian_belanja)  ?></td>
-                            <td><?= $key->bulan_penyerapan ?></td>
+                            <td><?= bulan($key->bulan)  ?></td>
+                            <td><?= $key->tanggal_penyerapan ?></td>
                             <td><?= strtoupper($key->nama_lengkap) ?></td>
                             <td><?= rupiah($key->jumlah_penyerapan)  ?></td>
                             <td><a href="<?= base_url('uploads/') . $key->lampiran ?>" target="_blank" class="text-blue">Lihat Lampiran</a></td>
@@ -130,6 +126,15 @@ class Penyerapan extends CI_Controller
                 </tbody>
             </table>
 <?php }
+    }
+    public function test($id_detail_anggaran)
+    {
+        $data = $this->penyerapan_m->cek_bulan_penyerapan($id_detail_anggaran);
+        if ($data) {
+            print 1;
+        } else {
+            print 0;
+        }
     }
 }
 

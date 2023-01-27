@@ -78,12 +78,12 @@
                                     <td><?= $key->tahun_anggaran ?></td>
                                     <td><?= strtoupper($key->uraian_belanja)  ?></td>
                                     <td><?= rupiah(total_anggaran($key->id_belanja))  ?></td>
-                                    <td>0</td>
+                                    <td><?= rupiah(total_anggaran($key->id_belanja) - total_penyerapan_by_id_belanja($key->id_belanja))  ?></td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="<?= base_url('penyerapan/create/') . encrypt_url($key->id_belanja) ?> "><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top">Serap Anggaran
-                                                </button>
-                                            </a>
+
+                                            <a class="btn btn-default btn-sm" data-toggle="modal" onclick="getDetail(<?= $key->id_belanja ?>)" href="#modal_Detail" data-tolltip="tooltip" data-placement="top" title="Serap Anggaran">Serap Anggaran</a>
+
                                             <a class="btn btn-default btn-sm" data-toggle="modal" onclick="getHistori(<?= $key->id_belanja ?>)" href="#modal_Detail">Lihat Penyerapan</a>
                                         </div>
                                     </td>
@@ -97,73 +97,39 @@
         <!-- /.card -->
     </div>
 </div>
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">
-                    <h3>Data Penyerapan</h3>
-                </div>
+<div class="modal fade" id="modal_Detail">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detail Perencanaan Anggaran</h4>
             </div>
-
-            <div class="card-body">
-                <div class="card-body table-responsive p-0 mt-4">
-                    <table id="TabelPenyerapan" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">No</th>
-                                <th>Kode Rekening</th>
-                                <th>Tahun Anggaran</th>
-                                <th>Uraian</th>
-                                <th>Lampiran</th>
-                                <th width='110'>Penyerapan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            foreach ($penyerapan as $key) : ?>
-                                <tr>
-                                    <td><?= $no++ ?></td>
-                                    <td><?= $key->kode_rekening_belanja ?></td>
-                                    <td><?= $key->tahun_anggaran ?></td>
-                                    <td><?= strtoupper($key->uraian_belanja)  ?></td>
-                                    <td><a href="<?= base_url('uploads/') . $key->lampiran ?>" target="_blank" class="text-blue">Lihat Lampiran</a></td>
-                                    <td><?= rupiah($key->jumlah_penyerapan)  ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th colspan="5" style="text-align:right">Total Penyerapan:</th>
-                                <th><?= rupiah($total_penyerapan)  ?></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="modal fade" id="modal_Detail">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Riwayat data penyerapan</h4>
-                                </div>
-                                <div class="modal-body" id="bodymodal_Detail">
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-primary float-right" id="closemodal">Tutup</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="modal-body" id="bodymodal_Detail">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary float-right" id="closemodal">Tutup</button>
             </div>
         </div>
-        <!-- /.card -->
     </div>
 </div>
+
 
 <!-- page script -->
 
 <script>
+    function getDetail(id) {
+        $.ajax({
+            type: "get",
+            url: "<?= site_url('anggaran/detail_perencanaan_for_penyerapan/'); ?>" + id,
+            // data: "id=" + id,
+            dataType: "html",
+            success: function(response) {
+                console.log(response);
+                $('#bodymodal_Detail').empty();
+                $('#bodymodal_Detail').append(response);
+            }
+        });
+    }
+
     function getHistori(id) {
         $.ajax({
             type: "get",

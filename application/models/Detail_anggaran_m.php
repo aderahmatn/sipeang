@@ -108,8 +108,8 @@ class Detail_anggaran_m extends CI_Model
     public function cek_bulan($bulan, $id_belanja)
     {
         $this->db->select('*');
-        $this->db->where('id_belanja', $id_belanja);
-        $this->db->where('bulan', $bulan);
+        $array = array('id_belanja' => $id_belanja, 'bulan' => $bulan);
+        $this->db->where($array);
         $query = $this->db->get($this->_table);
         return $query->row();
     }
@@ -122,6 +122,87 @@ class Detail_anggaran_m extends CI_Model
         $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
         $this->db->where('detail_anggaran.id_detail_anggaran', $id);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran($id_belanja)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->where('id_belanja', $id_belanja);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran_per_subkegiatan($id_subkegiatan)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->where('subkegiatan.id_subkegiatan', $id_subkegiatan);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran_per_subkegiatan_per_bulan($bulan, $id_subkegiatan)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->where('subkegiatan.id_subkegiatan', $id_subkegiatan);
+        $this->db->where('detail_anggaran.bulan', $bulan);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran_per_kegiatan($id_kegiatan)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->where('kegiatan.id_kegiatan', $id_kegiatan);
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran_per_kegiatan_per_bulan($bulan, $id_kegiatan)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->where('kegiatan.id_kegiatan', $id_kegiatan);
+        $this->db->where('detail_anggaran.bulan', $bulan);
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran_per_program($id_program)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('program.id_program', $id_program);
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function jumlah_anggaran_per_program_per_bulan($bulan, $id_program)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('program.id_program', $id_program);
+        $this->db->where('detail_anggaran.bulan', $bulan);
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->row();

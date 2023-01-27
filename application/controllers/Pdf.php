@@ -14,14 +14,11 @@ class Pdf extends CI_Controller
         include_once APPPATH . '/third_party/fpdf/fpdf.php';
     }
 
-    public function export($tahun, $id_subkegiatan)
+    public function perencanaan($tahun)
     {
-        $data["subkegiatan"] = $this->subkegiatan_m->get_all();
-        $data["total_anggaran"] = $this->anggaran_m->get_total_anggaran_laporan($tahun, $id_subkegiatan);
-        $data["anggaran"] = $this->anggaran_m->get_anggaran_laporan($tahun, $id_subkegiatan);
         $data['tahun'] = $tahun;
-        $data['id_subkegiatan'] = $id_subkegiatan;
-        $this->load->view('pdf/pdf_report', $data);
+        $data['program'] = $this->anggaran_m->get_by_tahun($data['tahun']);
+        $this->load->view('pdf/pdf_perencanaan', $data);
     }
 }
 

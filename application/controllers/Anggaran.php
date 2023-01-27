@@ -16,6 +16,7 @@ class Anggaran extends CI_Controller
         $this->load->model('Detail_anggaran_edited_m');
         $this->load->helper('bulan');
         $this->load->helper('anggaran');
+        $this->load->helper('penyerapan');
     }
 
     public function index()
@@ -30,9 +31,22 @@ class Anggaran extends CI_Controller
         foreach ($data as $key) :
 
 ?>
-            <tr class="text-bold" id="kegiatan<?= $key->id_kegiatan ?>">
-                <td><?= $key->uraian_kegiatan ?></td>
-                <td>0</td>
+            <tr class="text-bold" id="kegiatan<?= $key->id_kegiatan ?>" style="background-color: #fbf8d5;">
+                <td><?= $key->kode_rekening_kegiatan ?></td>
+                <td><?= ucwords($key->uraian_kegiatan) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan($key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(1, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(2, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(3, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(4, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(5, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(6, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(7, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(8, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(9, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(10, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(11, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah_no_rp(jumlah_anggaran_per_kegiatan_per_bulan(12, $key->id_kegiatan)) ?></td>
             </tr>
             <script>
                 getSubkegiatan(<?= $key->id_kegiatan ?>, <?= $key->id_kegiatan ?>);
@@ -47,9 +61,23 @@ class Anggaran extends CI_Controller
 
         ?>
 
-            <tr id="subkegiatan<?= $key->id_subkegiatan ?>">
-                <td><i><?= $key->uraian_subkegiatan ?></i></td>
-                <td>0</td>
+            <tr id="subkegiatan<?= $key->id_subkegiatan ?>" style="background-color: #d2fbd3;">
+                <td><i><?= $key->kode_rekening_subkegiatan ?></i></td>
+                <td><i><?= ucwords($key->uraian_subkegiatan) ?></i></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan($key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(1, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(2, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(3, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(4, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(5, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(6, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(7, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(8, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(9, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(10, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(11, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_subkegiatan_per_bulan(12, $key->id_subkegiatan)) ?></td>
+
             </tr>
             <script>
                 getDetailBelanja(<?= $key->id_subkegiatan ?>, <?= $key->id_subkegiatan ?>)
@@ -62,9 +90,23 @@ class Anggaran extends CI_Controller
         foreach ($data as $key) :
 
         ?>
-            <tr>
-                <td class=""><?= $key->uraian_belanja ?></td>
-                <td>0</td>
+
+            <tr style="background-color: #ffcfcf;">
+                <td><?= $key->kode_rekening_belanja ?></td>
+                <td><?= ucwords($key->uraian_belanja)  ?></td>
+                <td><?= rupiah_no_rp(total_anggaran_per_detail($key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(1, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(2, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(3, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(4, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(5, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(6, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(7, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(8, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(9, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(10, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(11, $key->id_belanja)) ?></td>
+                <td><?= rupiah_no_rp(cek_bulan_anggaran(12, $key->id_belanja)) ?></td>
             </tr>
         <?php endforeach;
     }
@@ -222,6 +264,49 @@ class Anggaran extends CI_Controller
             </tbody>
         </table>
         <?php }
+    public function detail_perencanaan_for_penyerapan($id)
+    {
+        $data = $this->Detail_anggaran_m->get_all($id);
+        if ($data) { ?>
+            <p>Uraian Anggaran :<b> <?= $data[0]->uraian_belanja; ?></b></p>
+            <p>Tahun Anggaran :<b> <?= $data[0]->tahun_anggaran; ?></b></p>
+        <?php } else { ?>
+            <p class="text-muted">Belum ada data</p>
+        <?php  }
+        ?>
+        <table class="table table-bordered table-striped text-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Bulan</th>
+                    <th>Anggaran</th>
+                    <th>APBD</th>
+                    <th style="width: 15%">Pilih</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $no = 1;
+
+                foreach ($data as $key) : ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= bulan($key->bulan) ?></td>
+                        <td><?= rupiah($key->jumlah_anggaran) ?></td>
+                        <td><?= strtoupper($key->nama_apbd) ?></td>
+                        <td>
+                            <?php if (cek_bulan_penyerapan($key->id_detail_anggaran) == 1) { ?>
+                                <span class="badge badge-success">Sudah terserap</span>
+                            <?php } else { ?>
+                                <a class="btn btn-default btn-sm" href="<?= base_url('penyerapan/create/') . encrypt_url($key->id_detail_anggaran)  ?>" data-tolltip="tooltip" data-placement="top" title="Pilih bulan penyerapan"><i class="fas fa-check"></i> Pilih</a>
+                            <?php } ?>
+
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+
+            </tbody>
+        </table>
+        <?php }
     public function get_history($id)
     {
         $data = $this->Detail_anggaran_edited_m->get_all($id);
@@ -254,10 +339,10 @@ class Anggaran extends CI_Controller
             </table>
         <?php }
     }
-    public function json_test($id = null)
+    public function test($id = null)
     {
-        $data['data'] = $this->anggaran_m->get_all_by_tahun($id);
-        print json_encode($data);
+        $data['data'] = $this->anggaran_m->get_sisa_anggaran(18);
+        print $data['data']->jumlah_anggaran;
     }
     public function detail_dashboard($id = null)
     {

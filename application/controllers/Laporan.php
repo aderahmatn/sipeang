@@ -13,6 +13,7 @@ class Laporan extends CI_Controller
         $this->load->model('subkegiatan_m');
         $this->load->model('laporan_m');
         $this->load->helper('penyerapan');
+        $this->load->helper('anggaran');
     }
     public function index()
     {
@@ -40,11 +41,11 @@ class Laporan extends CI_Controller
         if ($tahun == null) {
             $data['tahun'] = date('Y');
             $data['program'] = $this->anggaran_m->get_by_tahun($data['tahun']);
-            $this->template->load('shared/index', 'laporan/index1', $data);
+            $this->template->load('shared/index', 'laporan/perencanaan', $data);
         } else {
             $data['tahun'] = $tahun;
             $data['program'] = $this->anggaran_m->get_by_tahun($data['tahun']);
-            $this->template->load('shared/index', 'laporan/index1', $data);
+            $this->template->load('shared/index', 'laporan/perencanaan', $data);
         }
     }
 }
