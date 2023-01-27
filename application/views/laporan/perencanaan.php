@@ -116,7 +116,7 @@
                     <?php
                     foreach ($program as $key) : ?>
                         <tbody>
-                            <tr id="program<?= $key->id_program ?>" class="text-ITALIC" style="background-color: #d2fafb;">
+                            <tr id="program<?= $key->id_program ?>" class="text-bold" style="background-color: #d2fafb;">
                                 <td><?= $key->kode_rekening ?></td>
                                 <td><?= $key->uraian_program ?></td>
                                 <td><?= rupiah_no_rp(jumlah_anggaran_per_program($key->id_program))  ?></td>
