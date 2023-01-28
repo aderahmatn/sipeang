@@ -67,66 +67,6 @@
                 </div>
             </div>
         </div>
-        <div class="card mt-2">
-            <div class="card-header border-0">
-                <h3 class="card-title ml-n2">Data Anggaran Tahun 2023</h3>
-                <div class="card-tools">
-                    <!-- <a href="#" class="btn btn-tool btn-sm">
-                        <i class="fas fa-download"></i>
-                    </a>
-                    <a href="#" class="btn btn-tool btn-sm">
-                        <i class="fas fa-bars"></i>
-                    </a> -->
-                </div>
-            </div>
-            <div class="card-body table-responsive p-3 ">
-                <table id="TabelUser" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <!-- <th style="width: 10px">No</th> -->
-
-                            <th></th>
-                            <th>Uraian</th>
-                            <th>Anggaran</th>
-                            <th>Sisa Anggaran</th>
-                            <th>%</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $no = 1;
-                        foreach ($anggaran as $key) : ?>
-                            <tr>
-                                <!-- <td><?= $no++ ?></td> -->
-                                <td>
-                                    <a class="text-muted" data-toggle="modal" onclick="getHistori(<?= $key->id_belanja ?>)" href="#modal_Detail"><i class="fas fa-eye"></i></a>
-                                </td>
-
-                                <td><?= strtoupper($key->uraian_belanja)  ?></td>
-                                <td><?= rupiah($key->anggaran_belanja_one)  ?></td>
-                                <td><?= rupiah($key->sisa_anggaran)  ?></td>
-                                <td><?= ceil($key->jumlah_penyerapan / $key->anggaran_belanja_one * 100)  ?><sup style="font-size: 12px"> %</sup> </td>
-
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="modal fade" id="modal_Detail">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Detail data</h4>
-                            </div>
-                            <div class="modal-body" id="bodymodal_Detail">
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-primary float-right" id="closemodal">Tutup</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
