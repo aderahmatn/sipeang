@@ -90,7 +90,7 @@ class user_m extends CI_Model
             [
                 'field' => 'fnip',
                 'label' => 'NIP',
-                'rules' => 'required|numeric|min_length[20]|max_length[20]'
+                'rules' => 'required|numeric|min_length[18]|max_length[20]'
             ],
         ];
     }

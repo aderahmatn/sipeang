@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= base_url('subegiatan') ?>">Master Sub Kegiatan</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url('subkegiatan') ?>">Master Sub Kegiatan</a></li>
                     <li class="breadcrumb-item active">Edit Data Sub Kegiatan</li>
                 </ol>
             </div>
