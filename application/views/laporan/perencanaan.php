@@ -76,7 +76,7 @@
                                 // data: "id=" + id,
                                 dataType: "html",
                                 success: function(response) {
-                                    console.log(id);
+                                    // console.log(id);
                                     // $('#bodymodal_Detail').empty();
                                     $('#program' + id).after(response);
                                 }
@@ -91,7 +91,7 @@
                                 // data: "id=" + id,
                                 dataType: "html",
                                 success: function(response) {
-                                    console.log(id);
+                                    // console.log(id);
                                     // $('#bodymodal_Detail').empty();
                                     $('#kegiatan' + id_kegiatan).after(response);
                                 }
@@ -106,7 +106,7 @@
                                 // data: "id=" + id,
                                 dataType: "html",
                                 success: function(response) {
-                                    console.log(id);
+                                    // console.log(id);
                                     // $('#bodymodal_Detail').empty();
                                     $('#subkegiatan' + id_sub).after(response);
                                 }
