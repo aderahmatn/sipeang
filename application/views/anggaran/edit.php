@@ -15,7 +15,7 @@
     </div><!-- /.container-fluid -->
 </section>
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Edit data anggaran belanja</h3>
