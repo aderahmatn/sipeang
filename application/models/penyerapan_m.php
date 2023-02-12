@@ -63,6 +63,53 @@ class penyerapan_m extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_kegiatan_by_date_range($tgl_awal, $tgl_akhir, $id_program)
+    {
+        $this->db->select('*');
+        $this->db->join('detail_anggaran', 'detail_anggaran.id_detail_anggaran = penyerapan.id_detail_anggaran', 'left');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('program.id_program', $id_program);
+        $this->db->where('tanggal_penyerapan >=', $tgl_awal);
+        $this->db->where('tanggal_penyerapan <=', $tgl_akhir);
+        $this->db->group_by('kegiatan.id_kegiatan', 'desc');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_subkegiatan_by_date_range($tgl_awal, $tgl_akhir, $id_kegiatan)
+    {
+        $this->db->select('*');
+        $this->db->join('detail_anggaran', 'detail_anggaran.id_detail_anggaran = penyerapan.id_detail_anggaran', 'left');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('kegiatan.id_kegiatan', $id_kegiatan);
+        $this->db->where('tanggal_penyerapan >=', $tgl_awal);
+        $this->db->where('tanggal_penyerapan <=', $tgl_akhir);
+        $this->db->group_by('subkegiatan.id_subkegiatan', 'desc');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_detail_by_date_range($tgl_awal, $tgl_akhir, $id_subkegiatan)
+    {
+        $this->db->select('*');
+        $this->db->join('detail_anggaran', 'detail_anggaran.id_detail_anggaran = penyerapan.id_detail_anggaran', 'left');
+        $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->where('subkegiatan.id_subkegiatan', $id_subkegiatan);
+        $this->db->where('tanggal_penyerapan >=', $tgl_awal);
+        $this->db->where('tanggal_penyerapan <=', $tgl_akhir);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function add($post, $file)
     {
         $post = $this->input->post();

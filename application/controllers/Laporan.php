@@ -15,26 +15,7 @@ class Laporan extends CI_Controller
         $this->load->helper('penyerapan');
         $this->load->helper('anggaran');
     }
-    public function index()
-    {
-        $laporan  = $this->laporan_m;
-        $validation = $this->form_validation;
-        $validation->set_rules($laporan->rules());
-        if ($validation->run() == FALSE) {
-            $data["tahun"] = null;
-            $data["anggaran"] = null;
-            $data["subkegiatan"] = $this->subkegiatan_m->get_all();
-            $this->template->load('shared/index', 'laporan/index', $data);
-        } else {
-            $post = $this->input->post(null, TRUE);
-            $data["subkegiatan"] = $this->subkegiatan_m->get_all();
-            $data["total_anggaran"] = $this->anggaran_m->get_total_anggaran_laporan($post['ftahun_anggaran'], $post['fsubkegiatan']);
-            $data["anggaran"] = $this->anggaran_m->get_anggaran_laporan($post['ftahun_anggaran'], $post['fsubkegiatan']);
-            $data["tahun"] = $post['ftahun_anggaran'];
-            $data["id_subkegiatan"] = $post['fsubkegiatan'];
-            $this->template->load('shared/index', 'laporan/index', $data);
-        }
-    }
+
 
     public function perencanaan($tahun = null)
     {
@@ -55,11 +36,15 @@ class Laporan extends CI_Controller
         $validation = $this->form_validation;
         $validation->set_rules($penyerapan->rules_laporan());
         if ($validation->run() == FALSE) {
+            $data['tgl_awal'] = null;
+            $data['tgl_akhir'] = null;
             $data['tes'] = null;
             $data['penyerapan'] = null;
             $this->template->load('shared/index', 'laporan/penyerapan', $data);
         } else {
             $post = $this->input->post(null, TRUE);
+            $data['tgl_awal'] = $post['ftgl_awal'];
+            $data['tgl_akhir'] = $post['ftgl_akhir'];
             $data['tes'] = 'ada';
             $data['penyerapan'] = $this->penyerapan_m->get_by_date_range($post['ftgl_awal'], $post['ftgl_akhir']);
             $this->template->load('shared/index', 'laporan/penyerapan', $data);

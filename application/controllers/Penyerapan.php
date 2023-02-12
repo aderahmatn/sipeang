@@ -17,6 +17,47 @@ class Penyerapan extends CI_Controller
         $this->load->helper('penyerapan_helper');
     }
 
+    public function insert_kegiatan($tgl_awal, $tgl_akhir, $id_program)
+    {
+        $data = $this->penyerapan_m->get_kegiatan_by_date_range($tgl_awal, $tgl_akhir, $id_program);
+        foreach ($data as $key) : ?>
+            <tr id="kegiatan<?= $key->id_kegiatan ?>">
+                <td><?= $key->kode_rekening_kegiatan ?></td>
+                <td><?= $key->uraian_kegiatan ?></td>
+                <td><?= rupiah(jumlah_anggaran_per_kegiatan($key->id_kegiatan)) ?></td>
+            </tr>
+            <script>
+                subKegiatan("<?= $tgl_awal ?>", "<?= $tgl_akhir ?>", <?= $key->id_kegiatan ?>);
+            </script>
+        <?php endforeach;
+    }
+
+    public function insert_subkegiatan($tgl_awal, $tgl_akhir, $id_kegiatan)
+    {
+        $data = $this->penyerapan_m->get_subkegiatan_by_date_range($tgl_awal, $tgl_akhir, $id_kegiatan);
+        foreach ($data as $key) : ?>
+            <tr id="subkegiatan<?= $key->id_subkegiatan ?>">
+                <td><?= $key->kode_rekening_subkegiatan ?></td>
+                <td><?= ucwords($key->uraian_subkegiatan) ?></td>
+                <td><?= rupiah(total_anggaran_per_subkegiatan($key->id_subkegiatan)) ?></td>
+            </tr>
+            <script>
+                detail("<?= $tgl_awal ?>", "<?= $tgl_akhir ?>", <?= $key->id_subkegiatan ?>);
+            </script>
+        <?php endforeach;
+    }
+    public function insert_detail($tgl_awal, $tgl_akhir, $id_subkegiatan)
+    {
+        $data = $this->penyerapan_m->get_detail_by_date_range($tgl_awal, $tgl_akhir, $id_subkegiatan);
+        foreach ($data as $key) : ?>
+            <tr>
+                <td><?= $key->kode_rekening_belanja ?></td>
+                <td><?= ucwords($key->uraian_belanja) ?></td>
+                <td><?= rupiah(total_anggaran_per_detail($key->id_belanja)) ?></td>
+            </tr>
+        <?php endforeach;
+    }
+
     public function index()
     {
         $data['subkegiatan'] = $this->anggaran_m->get_subkegiatan();

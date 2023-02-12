@@ -65,10 +65,48 @@
         </div>
     </div>
 <?php } else { ?>
+    <script>
+        function getKegiatan(tgl_awal, tgl_akhir, id_program) {
+            $.ajax({
+                type: "get",
+                url: "<?= site_url('penyerapan/insert_kegiatan/'); ?>" + tgl_awal + "/" + tgl_akhir + "/" + id_program,
+                dataType: "html",
+                success: function(response) {
+                    console.log(tgl_akhir);
+                    $('#program' + id_program).after(response);
+
+                }
+            });
+        }
+
+        function subKegiatan(tgl_awal, tgl_akhir, idkegiatan) {
+            $.ajax({
+                type: "get",
+                url: "<?= site_url('penyerapan/insert_subkegiatan/'); ?>" + tgl_awal + "/" + tgl_akhir + "/" + idkegiatan,
+                dataType: "html",
+                success: function(response) {
+                    $('#kegiatan' + idkegiatan).after(response);
+                }
+            });
+        }
+
+        function detail(tgl_awal, tgl_akhir, id_subkegiatan) {
+            $.ajax({
+                type: "get",
+                url: "<?= site_url('penyerapan/insert_detail/'); ?>" + tgl_awal + "/" + tgl_akhir + "/" + id_subkegiatan,
+                dataType: "html",
+                success: function(response) {
+                    $('#subkegiatan' + id_subkegiatan).after(response);
+                }
+            });
+        }
+    </script>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <p class="text-center text-sm text-bold mb-0">LAPORAN REALISASI ANGGARAN SKPD</p>
+                    <p class="text-center text-sm text-bold mb-3">PERIODE <?= $tgl_awal ?> S/D <?= $tgl_akhir ?></p>
                     <table class="table table-bordered text-sm">
                         <thead>
                             <tr>
@@ -83,11 +121,14 @@
                         <tbody>
                             <?php
                             foreach ($penyerapan as $key) : ?>
-                                <tr>
+                                <tr id="program<?= $key->id_program ?>" class="text-bold">
                                     <td><?= $key->kode_rekening ?></td>
                                     <td><?= $key->uraian_program ?></td>
                                     <td><?= rupiah(jumlah_anggaran_per_program($key->id_program)) ?></td>
                                 </tr>
+                                <script>
+                                    getKegiatan("<?= $tgl_awal ?>", "<?= $tgl_akhir ?>", <?= $key->id_program ?>)
+                                </script>
                             <?php endforeach ?>
                         </tbody>
                     </table>

@@ -202,7 +202,7 @@ class Detail_anggaran_m extends CI_Model
         $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
         $this->db->where('program.id_program', $id_program);
-        if ($this->session->userdata('id_user') == 'pptk') {
+        if ($this->session->userdata('role') == 'pptk') {
             $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
         }
         $this->db->from($this->_table);
