@@ -103,6 +103,15 @@ class user_m extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_pptk()
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where('user.deleted', 0);
+        $this->db->where('user.role', 'pptk');
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_by_id($id)
     {
         return $this->db->get_where($this->_table, ["id_user" => $id])->row();

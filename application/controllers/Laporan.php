@@ -48,6 +48,23 @@ class Laporan extends CI_Controller
             $this->template->load('shared/index', 'laporan/perencanaan', $data);
         }
     }
+    public function penyerapan()
+    {
+
+        $penyerapan  = $this->penyerapan_m;
+        $validation = $this->form_validation;
+        $validation->set_rules($penyerapan->rules_laporan());
+        if ($validation->run() == FALSE) {
+            $data['tes'] = null;
+            $data['penyerapan'] = null;
+            $this->template->load('shared/index', 'laporan/penyerapan', $data);
+        } else {
+            $post = $this->input->post(null, TRUE);
+            $data['tes'] = 'ada';
+            $data['penyerapan'] = $this->penyerapan_m->get_by_date_range($post['ftgl_awal'], $post['ftgl_akhir']);
+            $this->template->load('shared/index', 'laporan/penyerapan', $data);
+        }
+    }
 }
 
 /* End of file Laporan.php */

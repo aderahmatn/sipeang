@@ -12,7 +12,7 @@
                         <select class="form-control form-control-sm bg-default" id="ftahun_dashboard" name="ftahun_dashboard">
                             <?php
 
-                            $now = date('Y');
+                            $now = date('Y') - 10;
                             $range = date('Y') + 10;
                             for ($i = $now; $i < $range; $i++) { ?>
                                 <option value="<?= $i ?>" <?= $tahun == $i ? 'selected' : '' ?>><?= $i ?></option>

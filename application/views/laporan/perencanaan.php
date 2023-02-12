@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <select class="form-control form-control-sm bg-default" id="ftahun_dashboard" name="ftahun_dashboard">
                                 <?php
-                                $now = date('Y');
+                                $now = date('Y') - 10;
                                 $range = date('Y') + 10;
                                 for ($i = $now; $i < $range; $i++) { ?>
                                     <option value="<?= $i ?>" <?= $tahun == $i ? 'selected' : '' ?>><?= $i ?></option>
@@ -52,18 +52,18 @@
                             <th colspan="12" class="text-center align-middle">BULAN</th>
                         </tr>
                         <tr>
-                            <th class="text-center align-middle">1</th>
-                            <th class="text-center align-middle">2</th>
-                            <th class="text-center align-middle">3</th>
-                            <th class="text-center align-middle">4</th>
-                            <th class="text-center align-middle">5</th>
-                            <th class="text-center align-middle">6</th>
-                            <th class="text-center align-middle">7</th>
-                            <th class="text-center align-middle">8</th>
-                            <th class="text-center align-middle">9</th>
-                            <th class="text-center align-middle">10</th>
-                            <th class="text-center align-middle">11</th>
-                            <th class="text-center align-middle">12</th>
+                            <th class="text-center align-middle">Jan</th>
+                            <th class="text-center align-middle">Feb</th>
+                            <th class="text-center align-middle">Mar</th>
+                            <th class="text-center align-middle">Apr</th>
+                            <th class="text-center align-middle">Mei</th>
+                            <th class="text-center align-middle">Jun</th>
+                            <th class="text-center align-middle">Jul</th>
+                            <th class="text-center align-middle">Agt</th>
+                            <th class="text-center align-middle">Sep</th>
+                            <th class="text-center align-middle">Okt</th>
+                            <th class="text-center align-middle">Nov</th>
+                            <th class="text-center align-middle">Des</th>
                         </tr>
 
                     </thead>

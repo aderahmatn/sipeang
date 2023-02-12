@@ -65,7 +65,6 @@ class subkegiatan_m extends CI_Model
             ],
         ];
     }
-
     public function get_all()
     {
         if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'operator') {

@@ -10,6 +10,7 @@ class Detail_anggaran_m extends CI_Model
     public $id_belanja;
     public $bulan;
     public $jumlah_anggaran;
+    public $sisa_anggaran;
     public $id_apbd;
     public $created_date;
     public $created_by;
@@ -56,6 +57,7 @@ class Detail_anggaran_m extends CI_Model
         $post = $this->input->post();
         $this->id_belanja = decrypt_url($post['fid_belanja']);
         $this->jumlah_anggaran = str_replace(".", "", $post['fjumlah_anggaran']);
+        $this->sisa_anggaran = str_replace(".", "", $post['fjumlah_anggaran']);
         $this->bulan = $post['fbulan'];
         $this->created_date = $post['fcreated_date'];
         $this->created_by = $post['fcreated_by'];
@@ -67,6 +69,7 @@ class Detail_anggaran_m extends CI_Model
         $post = $this->input->post();
         $this->id_detail_anggaran = decrypt_url($post['fid_detail_anggaran']);
         $this->jumlah_anggaran = str_replace(".", "", $post['fjumlah_anggaran']);
+        $this->sisa_anggaran = $post['fsisa_anggaran'];
         $this->bulan = $post['fbulan'];
         $this->id_belanja = decrypt_url($post['fid_belanja']);
         $this->created_date = $post['fcreated_date'];
@@ -100,7 +103,9 @@ class Detail_anggaran_m extends CI_Model
         $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
         $this->db->join('subkegiatan', 'anggaran.id_subkegiatan = subkegiatan.id_subkegiatan', 'left');
         $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->where('anggaran.tahun_anggaran', $tahun);
         $query = $this->db->get($this->_table);
         return $query->row()->jumlah_anggaran;
@@ -130,6 +135,15 @@ class Detail_anggaran_m extends CI_Model
     {
         $this->db->select_sum('jumlah_anggaran');
         $this->db->where('id_belanja', $id_belanja);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function get_sisa_anggaran($id, $bulan)
+    {
+        $this->db->select_sum('sisa_anggaran');
+        $this->db->where('id_belanja', $id);
+        $this->db->where('bulan <', $bulan);
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->row();
@@ -188,7 +202,9 @@ class Detail_anggaran_m extends CI_Model
         $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
         $this->db->where('program.id_program', $id_program);
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('id_user') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->row();
@@ -206,6 +222,12 @@ class Detail_anggaran_m extends CI_Model
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->row();
+    }
+    public function update_sisa_anggaran($id, $sisa)
+    {
+        $this->db->set('sisa_anggaran', $sisa);
+        $this->db->where('id_detail_anggaran', $id);
+        $this->db->update($this->_table);
     }
 }
 

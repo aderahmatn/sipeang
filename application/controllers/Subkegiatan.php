@@ -25,7 +25,7 @@ class Subkegiatan extends CI_Controller
         $validation->set_rules($subkegiatan->rules());
         if ($validation->run() == FALSE) {
             $data['kegiatan'] = $this->kegiatan_m->get_all();
-            $data['user'] = $this->user_m->get_all();
+            $data['user'] = $this->user_m->get_pptk();
             $this->template->load('shared/index', 'subkegiatan/create', $data);
         } else {
             $post = $this->input->post(null, TRUE);
@@ -79,7 +79,7 @@ class Subkegiatan extends CI_Controller
             redirect('subkegiatan', 'refresh');
         }
         $data['kegiatan'] = $this->kegiatan_m->get_all();
-        $data['user'] = $this->user_m->get_all();
+        $data['user'] = $this->user_m->get_pptk();
         $this->template->load('shared/index', 'subkegiatan/edit', $data);
     }
     public function delete($id)

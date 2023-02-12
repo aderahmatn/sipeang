@@ -19,7 +19,7 @@ class Penyerapan extends CI_Controller
 
     public function index()
     {
-        $data['subkegiatan'] = $this->subkegiatan_m->get_all();
+        $data['subkegiatan'] = $this->anggaran_m->get_subkegiatan();
         $this->template->load('shared/index', 'penyerapan/index', $data);
     }
     public function detail($id = null)
@@ -48,26 +48,44 @@ class Penyerapan extends CI_Controller
             $data['error_upload'] = null;
             $data['error_penyerapan'] = null;
             $data['anggaran'] = $this->detail_anggaran_m->get_by_id(decrypt_url($id));
+            $data['sisa'] = $this->detail_anggaran_m->get_sisa_anggaran($data['anggaran']->id_belanja, $data['anggaran']->bulan);
             $this->template->load('shared/index', 'penyerapan/create', $data);
         } else {
-            $config['upload_path']          = './uploads/';
-            $config['allowed_types']        = 'pdf';
-            $config['max_size']             = 11000;
-            $config['encrypt_name']            = TRUE;
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('flampiran')) {
-                $data['error_penyerapan'] = null;
+            $post = $this->input->post(null, TRUE);
+            $data['anggaran'] = $this->detail_anggaran_m->get_by_id(decrypt_url($id));
+            $data['sisa'] = $this->detail_anggaran_m->get_sisa_anggaran($data['anggaran']->id_belanja, $data['anggaran']->bulan);
+            $anggaran = $data['anggaran']->jumlah_anggaran + $data['sisa']->sisa_anggaran;
+
+            if ($anggaran - str_replace(".", "", $post['fjumlah_penyerapan']) < 0) {
+                $data['error_upload'] = null;
+                $data['error_penyerapan'] = 'Anggaran tidak mencukupi.';
                 $data['anggaran'] = $this->detail_anggaran_m->get_by_id(decrypt_url($id));
-                $data['error_upload'] = array('error' => $this->upload->display_errors());
+                $data['sisa'] = $this->detail_anggaran_m->get_sisa_anggaran($data['anggaran']->id_belanja, $data['anggaran']->bulan);
                 $this->template->load('shared/index', 'penyerapan/create', $data);
             } else {
 
-                $post = $this->input->post(null, TRUE);
-                $file = $this->upload->data("file_name");
-                $penyerapan->Add($post, $file);
-                if ($this->db->affected_rows() > 0) {
-                    $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');
-                    redirect('penyerapan', 'refresh');
+                $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'pdf';
+                $config['max_size']             = 11000;
+                $config['encrypt_name']            = TRUE;
+                $this->load->library('upload', $config);
+                if (!$this->upload->do_upload('flampiran')) {
+                    $data['error_penyerapan'] = null;
+                    $data['error_jumlah'] = null;
+                    $data['anggaran'] = $this->detail_anggaran_m->get_by_id(decrypt_url($id));
+                    $data['sisa'] = $this->detail_anggaran_m->get_sisa_anggaran($data['anggaran']->id_belanja, $data['anggaran']->bulan);
+                    $data['error_upload'] = array('error' => $this->upload->display_errors());
+                    $this->template->load('shared/index', 'penyerapan/create', $data);
+                } else {
+                    $post = $this->input->post(null, TRUE);
+                    $file = $this->upload->data("file_name");
+                    $sisa_anggaran = $data['anggaran']->jumlah_anggaran - str_replace(".", "", $post['fjumlah_penyerapan']);
+                    $this->detail_anggaran_m->update_sisa_anggaran(decrypt_url($id), $sisa_anggaran);
+                    $penyerapan->Add($post, $file);
+                    if ($this->db->affected_rows() > 0) {
+                        $this->session->set_flashdata('success', 'Data penyerapan berhasil disimpan!');
+                        redirect('penyerapan', 'refresh');
+                    }
                 }
             }
         }

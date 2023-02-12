@@ -182,6 +182,41 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                 </li>
               </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<?= base_url('laporan/penyerapan') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'penyerapan' ? 'active' : '' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Penyerapan</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <?php } ?>
+          <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'pa') { ?>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link <?= $this->uri->segment(1) == 'laporan' ? 'active' : '' ?>"">
+                <i class=" nav-icon fa fa-file-download"></i>
+                <p>
+                  Laporan
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<?= base_url('laporan/perencanaan') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'perencanaan' ? 'active' : '' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Perencanaan</p>
+                  </a>
+                </li>
+              </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<?= base_url('laporan/penyerapan') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'penyerapan' ? 'active' : '' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Penyerapan</p>
+                  </a>
+                </li>
+              </ul>
             </li>
           <?php } ?>
           <li class="nav-item">

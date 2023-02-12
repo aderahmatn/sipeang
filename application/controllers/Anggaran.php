@@ -21,7 +21,7 @@ class Anggaran extends CI_Controller
 
     public function index()
     {
-        $data['subkegiatan'] = $this->subkegiatan_m->get_all();
+        $data['subkegiatan'] = $this->anggaran_m->get_subkegiatan();
         $data['anggaran'] = $this->anggaran_m->get_all();
         $this->template->load('shared/index', 'anggaran/index', $data);
     }

@@ -22,11 +22,10 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <?= var_dump($kegiatan) ?>
             <form role="form" method="POST" action="" autocomplete="off">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <input type="hidden" name="fcreated_by" value="<?= $this->session->userdata('nip'); ?>" style="display: none">
-                <input type="text" name="fid_kegiatan" value="<?= $kegiatan->id_kegiatan  ?>">
+                <input type="hidden" name="fid_kegiatan" value="<?= $kegiatan->id_kegiatan  ?>">
                 <input type="hidden" name="fcreated_date" value="<?= date('y-m-d') ?>" style="display: none">
                 <div class="card-body">
                     <div class="form-group">

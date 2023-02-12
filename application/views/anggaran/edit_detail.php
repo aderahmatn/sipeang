@@ -31,6 +31,7 @@
                 <input type="hidden" name="fid_belanja" value="<?= encrypt_url($anggaran->id_belanja) ?>" style="display: none">
                 <input type="hidden" name="fjumlah_anggaran_old" value="<?= $anggaran->jumlah_anggaran ?>" style="display: none">
                 <input type="hidden" name="fapbd_old" value="<?= $anggaran->id_apbd ?>" style="display: none">
+                <input type="hidden" name="fsisa_anggaran" value="<?= $anggaran->sisa_anggaran ?>" style="display: none">
 
                 <div class="card-body">
                     <div class="form-group">

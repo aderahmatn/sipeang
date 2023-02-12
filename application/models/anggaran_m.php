@@ -40,21 +40,19 @@ class anggaran_m extends CI_Model
         $this->db->select('*');
         return $this->db->get_where($this->_table, ["anggaran.deleted" => 0])->result();
     }
-    // public function get_all_by_tahun($tahun)
-    // {
-    //     $this->db->select('*, anggaran.id_belanja, anggaran.anggaran_belanja as anggaran_belanja_one');
-    //     $this->db->select_sum('anggaran.anggaran_belanja');
-    //     $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
-    //     $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
-    //     $this->db->join('penyerapan', 'penyerapan.id_belanja = anggaran.id_belanja', 'left');
-    //     $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
-    //     $this->db->where('anggaran.tahun_anggaran', $tahun);
-    //     $this->db->select_sum('penyerapan.jumlah_penyerapan');
-    //     $this->db->group_by('anggaran.id_belanja');
-    //     $this->db->from($this->_table);
-    //     $query = $this->db->get();
-    //     return $query->result();
-    // }
+    public function get_subkegiatan()
+    {
+        $this->db->select('*');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->group_by('anggaran.id_subkegiatan');
+        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_all_by_subkegiatan_penyerapan($id)
     {
         $this->db->select('*');
@@ -98,7 +96,9 @@ class anggaran_m extends CI_Model
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
         $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->where('tahun_anggaran', $tahun);
         $this->db->group_by('program.id_program');
         $this->db->from($this->_table);
@@ -111,7 +111,9 @@ class anggaran_m extends CI_Model
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
         $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->where('tahun_anggaran', $tahun);
         $this->db->where('kegiatan.id_program', $id_program);
         $this->db->group_by('kegiatan.id_kegiatan');
@@ -125,7 +127,9 @@ class anggaran_m extends CI_Model
         $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
         $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->where('tahun_anggaran', $tahun);
         $this->db->where('subkegiatan.id_kegiatan', $id_program);
         $this->db->group_by('subkegiatan.id_subkegiatan');
@@ -141,7 +145,9 @@ class anggaran_m extends CI_Model
         $this->db->join('kegiatan', 'kegiatan.id_kegiatan = subkegiatan.id_kegiatan', 'left');
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
         $this->db->join('detail_anggaran', 'detail_anggaran.id_belanja = anggaran.id_belanja', 'left');
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->where('tahun_anggaran', $tahun);
         $this->db->where('anggaran.id_subkegiatan', $id);
         $this->db->group_by('anggaran.id_belanja');

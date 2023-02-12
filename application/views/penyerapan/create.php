@@ -57,20 +57,28 @@
                     <div class="col-8 text-uppercase"><?= $anggaran->uraian_belanja  ?> <br></div>
                 </div>
                 <div class="row py-2 bg-light">
-                    <div class="col-2"><strong>Total Anggaran </strong></div>
+                    <div class="col-2"><strong>Anggaran Bulan Ini </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
                     </div>
                     <div class="col-8 text-uppercase"><?= rupiah($anggaran->jumlah_anggaran)  ?> <br></div>
                 </div>
                 <div class="row py-2 ">
+                    <div class="col-2"><strong>Sisa Anggaran </strong></div>
+                    <div class="col-1">
+                        <strong>:</strong>
+                    </div>
+                    <div class="col-8 text-uppercase"><?= rupiah($sisa->sisa_anggaran)  ?> <br></div>
+                </div>
+                <div class="row py-2 bg-light">
                     <div class="col-2"><strong>Bulan Penyerapan </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
                     </div>
                     <div class="col-8 text-uppercase"><?= bulan($anggaran->bulan)  ?> <br></div>
                 </div>
-                <div class="row py-2 bg-light">
+
+                <div class="row py-2 ">
                     <div class="col-2"><strong>PIC Kegiatan </strong></div>
                     <div class="col-1">
                         <strong>:</strong>
@@ -91,14 +99,14 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rp</span>
                                     </div>
-                                    <input type="text" class="form-control <?= form_error('fjumlah_penyerapan') ? 'is-invalid' : '' ?>" id="fjumlah_penyerapan" name="fjumlah_penyerapan" placeholder="Jumlah penyerapan" value="<?= rupiah_no_rp($anggaran->jumlah_anggaran) ?>" readonly>
+                                    <input type="text" class="form-control <?= form_error('fjumlah_penyerapan') ? 'is-invalid' : '' ?>" id="fjumlah_penyerapan" name="fjumlah_penyerapan" placeholder="Jumlah penyerapan" value="<?= rupiah_no_rp($anggaran->jumlah_anggaran) ?>">
                                     <div class=" invalid-feedback">
                                         <?= form_error('fjumlah_penyerapan') ?>
                                     </div>
                                 </div>
                                 <small class="text-red mt-">
                                     <?php if ($error_penyerapan) {
-                                        print $error_penyerapan['error'];
+                                        print $error_penyerapan;
                                     } ?>
                                 </small>
                             </div>
