@@ -138,7 +138,6 @@
                             getDetail(<?= $key->id_program ?>);
                         </script>
                     <?php endforeach ?>
-
                 </table>
             </div>
         </div>

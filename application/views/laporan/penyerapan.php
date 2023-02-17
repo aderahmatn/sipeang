@@ -160,7 +160,7 @@
         },
         html2canvas: {
             dpi: 192,
-            scale: 3
+            scale: 4
         },
         jsPDF: {
             unit: 'in',
