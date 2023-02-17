@@ -36,7 +36,10 @@
                         <h4 class="text-bold mt-1"><?= rupiah($total_anggaran) ?></h4>
                         <p class="mt-3 mb-0">Total anggaran tahun <?= $tahun ?></p>
                     </div>
-                    <a href="<?= base_url('anggaran') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php if ($this->session->userdata('role') == 'pptk') { ?>
+                        <a href="<?= base_url('anggaran') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php } ?>
+
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -45,7 +48,10 @@
                         <h4 class="text-bold mt-1"><?= rupiah($total_penyerapan) ?></h4>
                         <p class="mt-3 mb-0">Total penyerapan tahun <?= $tahun ?></p>
                     </div>
-                    <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php if ($this->session->userdata('role') == 'pptk') { ?>
+                        <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php } ?>
+
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -54,7 +60,10 @@
                         <h4 class="text-bold mt-1"><?= rupiah($total_anggaran - $total_penyerapan) ?></h4>
                         <p class="mt-3 mb-0">Sisa anggaran tahun <?= $tahun ?></p>
                     </div>
-                    <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php if ($this->session->userdata('role') == 'pptk') { ?>
+                        <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php } ?>
+
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -63,11 +72,70 @@
                         <h4 class="text-bold mt-1"><?= $total_penyerapan == 0 ? '0' : ceil($total_penyerapan / $total_anggaran * 100) ?><sup style="font-size: 16px">%</sup></h4>
                         <p class="mt-3 mb-0">Presentase penyerapan tahun <?= $tahun ?></p>
                     </div>
-                    <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php if ($this->session->userdata('role') == 'pptk') { ?>
+                        <a href="<?= base_url('penyerapan') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                    <?php } ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">Jadwal realisasi bulan <?= bulan($bulan) ?> tahun <?= $tahun ?></h3>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($jadwal) { ?>
+                            <table class="table table-borderles text-sm">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Uraian</th>
+                                        <th>Anggaran</th>
+                                        <th>PIC</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($jadwal as $key) : ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= strtoupper($key->uraian_belanja) ?></td>
+                                            <td><?= rupiah($key->jumlah_anggaran) ?></td>
+                                            <td><?= strtoupper($key->nama_lengkap) ?></td>
+                                        </tr>
+                                    <?php endforeach ?>
+
+                                </tbody>
+                            </table>
+                        <?php } else { ?>
+                            <p class="text-sm text-center">Tidak ada data</p>
+                        <?php } ?>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">Telegram SIPEANG</h3>
+                    </div>
+                    <div class="card-body">
+                        <img src="<?= base_url('assets/images/telegram.jpg') ?>" class="img-fluid" alt="Responsive image">
+                        <p class="text-sm mt-4">Aktifkan bot telegram SIPEANG dengan cara : </p>
+                        <ul class="text-sm">
+                            <li>Cari <b>@SipeangBot</b> pada kolom pencarian telegram.</li>
+                            <li>Klik tombol <b>Start</b> untuk memulai sesi.</li>
+                            <li>Ikuti langkah selanjutnya untuk melakukan aktivasi akun anda pada bot telegram SIPEANG.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- Delete Confirm -->

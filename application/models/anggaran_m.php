@@ -205,6 +205,22 @@ class anggaran_m extends CI_Model
         $query = $this->db->get($this->_table);
         return $query->result();
     }
+    public function get_jadwal_for_dashboard($bulan, $tahun)
+    {
+        $this->db->select('*');
+        $this->db->join('detail_anggaran', 'detail_anggaran.id_belanja = anggaran.id_belanja', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_subkegiatan = anggaran.id_subkegiatan', 'left');
+        $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
+        $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->where('detail_anggaran.bulan', $bulan);
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
+        $query = $this->db->get($this->_table);
+        return $query->result();
+    }
     public function get_total_anggaran_laporan($tahun, $id_subkegiatan)
     {
         $this->db->select('*');
