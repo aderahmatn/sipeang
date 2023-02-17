@@ -1,3 +1,6 @@
+<script src="<?= base_url('assets/dist/js/jspdf.debug.js') ?>"></script>
+<script src="<?= base_url('assets/dist/js/html2canvas.min.js') ?>"></script>
+<script src="<?= base_url('assets/dist/js/html2pdf.min.js') ?>"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -104,7 +107,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header"><a href="javascript:void(0)" class="btn-download btn btn-danger float-right btn-sm text-white"><i class="fas fa-file-pdf"></i> Download .Pdf</a></div>
+                <div class="card-body" id="TabelPenyerapan">
                     <p class="text-center text-sm text-bold mb-0">LAPORAN REALISASI ANGGARAN SKPD</p>
                     <p class="text-center text-sm text-bold mb-3">PERIODE <?= $tgl_awal ?> S/D <?= $tgl_akhir ?></p>
                     <table class="table table-bordered text-sm">
@@ -125,6 +129,11 @@
                                     <td><?= $key->kode_rekening ?></td>
                                     <td><?= $key->uraian_program ?></td>
                                     <td><?= rupiah(jumlah_anggaran_per_program($key->id_program)) ?></td>
+                                    <td><?= rupiah(get_total_penyerapan_by_program($tgl_awal, $tgl_akhir, $key->id_program)) ?></td>
+                                    <td><?= rupiah(jumlah_anggaran_per_program($key->id_program) - get_total_penyerapan_by_program($tgl_awal, $tgl_akhir, $key->id_program)) ?></td>
+                                    <td><?= ceil(get_total_penyerapan_by_program($tgl_awal, $tgl_akhir, $key->id_program) / jumlah_anggaran_per_program($key->id_program) * 100) ?><sup>%</sup></td>
+
+
                                 </tr>
                                 <script>
                                     getKegiatan("<?= $tgl_awal ?>", "<?= $tgl_akhir ?>", <?= $key->id_program ?>)
@@ -137,3 +146,32 @@
         </div>
     </div>
 <?php } ?>
+
+<script src="<?= base_url('assets/dist/js/jspdf.debug.js') ?>"></script>
+<script src="<?= base_url('assets/dist/js/html2canvas.min.js') ?>"></script>
+<script src="<?= base_url('assets/dist/js/html2pdf.min.js') ?>"></script>
+<script>
+    const options = {
+        margin: 0.5,
+        filename: 'REALISASI ANGGARAN SKPD PERIODE <?= $tgl_awal ?> S/D <?= $tgl_akhir ?>.pdf',
+        image: {
+            type: 'png',
+            quality: 1
+        },
+        html2canvas: {
+            dpi: 192,
+            scale: 3
+        },
+        jsPDF: {
+            unit: 'in',
+            format: 'A3',
+            orientation: 'landscape'
+        }
+    }
+
+    $('.btn-download').click(function(e) {
+        e.preventDefault();
+        const element = document.getElementById('TabelPenyerapan');
+        html2pdf().from(element).set(options).save();
+    });
+</script>

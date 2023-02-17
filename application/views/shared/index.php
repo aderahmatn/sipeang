@@ -192,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
           <?php } ?>
-          <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'pa') { ?>
+          <?php if ($this->session->userdata('role') == 'pa') { ?>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link <?= $this->uri->segment(1) == 'laporan' ? 'active' : '' ?>"">
                 <i class=" nav-icon fa fa-file-download"></i>

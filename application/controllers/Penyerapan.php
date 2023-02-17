@@ -25,6 +25,10 @@ class Penyerapan extends CI_Controller
                 <td><?= $key->kode_rekening_kegiatan ?></td>
                 <td><?= $key->uraian_kegiatan ?></td>
                 <td><?= rupiah(jumlah_anggaran_per_kegiatan($key->id_kegiatan)) ?></td>
+
+                <td><?= rupiah(get_total_penyerapan_by_kegiatan($tgl_awal, $tgl_akhir, $key->id_kegiatan)) ?></td>
+                <td><?= rupiah(jumlah_anggaran_per_kegiatan($key->id_kegiatan) - get_total_penyerapan_by_kegiatan($tgl_awal, $tgl_akhir, $key->id_kegiatan)) ?></td>
+                <td><?= ceil(get_total_penyerapan_by_kegiatan($tgl_awal, $tgl_akhir, $key->id_kegiatan) / jumlah_anggaran_per_kegiatan($key->id_kegiatan) * 100) ?><sup>%</sup></td>
             </tr>
             <script>
                 subKegiatan("<?= $tgl_awal ?>", "<?= $tgl_akhir ?>", <?= $key->id_kegiatan ?>);
@@ -40,6 +44,9 @@ class Penyerapan extends CI_Controller
                 <td><?= $key->kode_rekening_subkegiatan ?></td>
                 <td><?= ucwords($key->uraian_subkegiatan) ?></td>
                 <td><?= rupiah(total_anggaran_per_subkegiatan($key->id_subkegiatan)) ?></td>
+                <td><?= rupiah(get_total_penyerapan_by_subkegiatan($tgl_awal, $tgl_akhir, $key->id_subkegiatan)) ?></td>
+                <td><?= rupiah(total_anggaran_per_subkegiatan($key->id_subkegiatan) - get_total_penyerapan_by_subkegiatan($tgl_awal, $tgl_akhir, $key->id_subkegiatan)) ?></td>
+                <td><?= ceil(get_total_penyerapan_by_subkegiatan($tgl_awal, $tgl_akhir, $key->id_subkegiatan) / total_anggaran_per_subkegiatan($key->id_subkegiatan) * 100) ?><sup>%</sup></td>
             </tr>
             <script>
                 detail("<?= $tgl_awal ?>", "<?= $tgl_akhir ?>", <?= $key->id_subkegiatan ?>);
@@ -54,6 +61,9 @@ class Penyerapan extends CI_Controller
                 <td><?= $key->kode_rekening_belanja ?></td>
                 <td><?= ucwords($key->uraian_belanja) ?></td>
                 <td><?= rupiah(total_anggaran_per_detail($key->id_belanja)) ?></td>
+                <td><?= rupiah(get_total_penyerapan_by_detail($tgl_awal, $tgl_akhir, $key->id_detail_anggaran)) ?></td>
+                <td><?= rupiah(total_anggaran_per_detail($key->id_belanja) - get_total_penyerapan_by_detail($tgl_awal, $tgl_akhir, $key->id_detail_anggaran)) ?></td>
+                <td><?= ceil(get_total_penyerapan_by_detail($tgl_awal, $tgl_akhir, $key->id_detail_anggaran) / total_anggaran_per_detail($key->id_belanja) * 100) ?><sup>%</sup></td>
             </tr>
         <?php endforeach;
     }

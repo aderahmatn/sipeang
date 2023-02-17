@@ -151,16 +151,16 @@
         $thn = $("#ftahun_dashboard").val();
         window.location = "<?= base_url('laporan/perencanaan/') ?>" + $thn;
     })
-
     const options = {
         margin: 0.5,
         filename: 'Rencana Pencairan Tahun Anggaran <?= $tahun ?>.pdf',
         image: {
             type: 'png',
-            quality: 5000
+            quality: 500000
         },
         html2canvas: {
-            scale: 1
+            dpi: 192,
+            scale: 4
         },
         jsPDF: {
             unit: 'in',
