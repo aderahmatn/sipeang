@@ -58,6 +58,9 @@ class penyerapan_m extends CI_Model
         $this->db->join('user', 'user.nip = penyerapan.created_by', 'left');
         $this->db->where('tanggal_penyerapan >=', $tgl_awal);
         $this->db->where('tanggal_penyerapan <=', $tgl_akhir);
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->order_by('penyerapan.created_date', 'desc');
         $this->db->group_by('program.id_program', 'desc');
         $this->db->from($this->_table_detail);

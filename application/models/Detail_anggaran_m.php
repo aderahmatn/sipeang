@@ -102,11 +102,17 @@ class Detail_anggaran_m extends CI_Model
         $this->db->select_sum('jumlah_anggaran');
         $this->db->join('anggaran', 'anggaran.id_belanja = detail_anggaran.id_belanja', 'left');
         $this->db->join('subkegiatan', 'anggaran.id_subkegiatan = subkegiatan.id_subkegiatan', 'left');
+        $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->join('program', 'kegiatan.id_program = program.id_program', 'left');
         $this->db->join('user', 'user.id_user = subkegiatan.pic_subkegiatan', 'left');
         if ($this->session->userdata('role') == 'pptk') {
             $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
         }
         $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->where('anggaran.deleted', 0);
+        $this->db->where('program.deleted', 0);
+        $this->db->where('kegiatan.deleted', 0);
+        $this->db->where('subkegiatan.deleted', 0);
         $query = $this->db->get($this->_table);
         return $query->row()->jumlah_anggaran;
     }
@@ -191,7 +197,9 @@ class Detail_anggaran_m extends CI_Model
         $this->db->join('kegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
         $this->db->where('kegiatan.id_kegiatan', $id_kegiatan);
         $this->db->where('detail_anggaran.bulan', $bulan);
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->row();
@@ -220,7 +228,9 @@ class Detail_anggaran_m extends CI_Model
         $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
         $this->db->where('program.id_program', $id_program);
         $this->db->where('detail_anggaran.bulan', $bulan);
-        $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
         $this->db->from($this->_table);
         $query = $this->db->get();
         return $query->row();

@@ -3,7 +3,8 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-md-6">
-                <h1>Detail Anggaran</h1>
+                <h1>Detail Anggaran </h1>
+                <p class="text-muted"><?= $subkegiatan->uraian_subkegiatan ?></p>
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb float-sm-right">

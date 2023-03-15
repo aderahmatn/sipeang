@@ -151,7 +151,7 @@
         window.location = "<?= base_url('laporan/perencanaan/') ?>" + $thn;
     })
     const options = {
-        margin: 0.5,
+        margin: 0,
         filename: 'Rencana Pencairan Tahun Anggaran <?= $tahun ?>.pdf',
         image: {
             type: 'png',
