@@ -94,6 +94,7 @@ class Detail_anggaran_m extends CI_Model
     {
         $this->db->select_sum('jumlah_anggaran');
         $this->db->where('id_belanja', $id);
+        // $this->db->where('deleted', 0);
         $query = $this->db->get($this->_table);
         return $query->row()->jumlah_anggaran;
     }
@@ -240,6 +241,15 @@ class Detail_anggaran_m extends CI_Model
         $this->db->set('sisa_anggaran', $sisa);
         $this->db->where('id_detail_anggaran', $id);
         $this->db->update($this->_table);
+    }
+    public function jumlah_anggaran_and_sisa_anggaran($id_belanja)
+    {
+        $this->db->select_sum('jumlah_anggaran');
+        $this->db->select_sum('sisa_anggaran');
+        $this->db->where('id_belanja', $id_belanja);
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->row();
     }
 }
 

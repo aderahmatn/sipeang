@@ -66,6 +66,22 @@ class kegiatan_m extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_by_program($id_program)
+    {
+        $this->db->select('*');
+        $this->db->join('program', 'program.id_program = kegiatan.id_program', 'left');
+        $this->db->join('subkegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        $this->db->where('kegiatan.deleted', 0);
+        $this->db->where('kegiatan.id_program', $id_program);
+        if ($this->session->userdata('role') == 'pptk') {
+            $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        }
+        $this->db->group_by('kegiatan.uraian_kegiatan');
+
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_by_id($id)
     {
         return $this->db->get_where($this->_table, ["id_kegiatan" => $id])->row();

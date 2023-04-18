@@ -111,6 +111,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('nota') ?>" class="nav-link <?= $this->uri->segment(1) == 'nota' ? 'active' : '' ?>">
+                  <i class="nav-icon fas fa-file"></i>
+                  <p>
+                    Nota Pencairan
+                  </p>
+                </a>
+              </li>
             <?php } ?>
 
             <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'operator' || $this->session->userdata('role') == 'pptk') { ?>

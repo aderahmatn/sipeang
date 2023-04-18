@@ -242,6 +242,7 @@ class penyerapan_m extends CI_Model
             $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
         }
         $this->db->where('anggaran.tahun_anggaran', $tahun);
+        $this->db->where('penyerapan.deleted', 0);
         $query = $this->db->get($this->_table);
         return $query->row()->jumlah_penyerapan;
     }

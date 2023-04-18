@@ -53,6 +53,19 @@ class program_m extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function get_all_by_pptk()
+    {
+        $this->db->select('*');
+        $this->db->where('program.deleted', 0);
+        // $this->db->join('kegiatan', 'program.id_program = kegiatan.id_program', 'left');
+        // $this->db->join('subkegiatan', 'subkegiatan.id_kegiatan = kegiatan.id_kegiatan', 'left');
+        // if ($this->session->userdata('role') == 'pptk') {
+        //     $this->db->where('subkegiatan.pic_subkegiatan', $this->session->userdata('id_user'));
+        // }
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function get_by_id($id)
     {
         return $this->db->get_where($this->_table, ["id_program" => $id])->row();
